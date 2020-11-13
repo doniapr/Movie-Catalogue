@@ -2,9 +2,12 @@ package com.doniapr.core.di
 
 import androidx.room.Room
 import com.doniapr.core.BuildConfig
+import com.doniapr.core.data.source.CatalogueRepository
+import com.doniapr.core.data.source.local.LocalDataSource
 import com.doniapr.core.data.source.local.room.CatalogueDatabase
 import com.doniapr.core.data.source.remote.RemoteDataSource
 import com.doniapr.core.data.source.remote.network.ApiService
+import com.doniapr.core.domain.repository.ICatalogueRepository
 import com.doniapr.core.utils.AppExecutors
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,6 +48,11 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
+    single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
+
+    single<ICatalogueRepository> {
+        CatalogueRepository(get(), get(), get())
+    }
 }
