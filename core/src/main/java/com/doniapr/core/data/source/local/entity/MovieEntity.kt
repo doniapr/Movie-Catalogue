@@ -23,7 +23,7 @@ data class MovieEntity (
     var backdropPath: String,
 
     @ColumnInfo(name = "genres")
-    var genres: List<Genre>,
+    var genres: String,
 
     @ColumnInfo(name = "homepage")
     var homepage: String,

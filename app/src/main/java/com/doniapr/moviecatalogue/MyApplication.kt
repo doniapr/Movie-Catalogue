@@ -4,6 +4,8 @@ import android.app.Application
 import com.doniapr.core.di.databaseModule
 import com.doniapr.core.di.networkModule
 import com.doniapr.core.di.repositoryModule
+import com.doniapr.moviecatalogue.di.useCaseModule
+import com.doniapr.moviecatalogue.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -19,7 +21,9 @@ class MyApplication: Application() {
                 listOf(
                     databaseModule,
                     networkModule,
-                    repositoryModule
+                    repositoryModule,
+                    useCaseModule,
+                    viewModelModule
                 )
             )
         }

@@ -2,6 +2,7 @@ package com.doniapr.core.utils
 
 import com.doniapr.core.data.source.local.entity.MovieEntity
 import com.doniapr.core.data.source.remote.response.MovieResponse
+import com.doniapr.core.domain.model.Genre
 import com.doniapr.core.domain.model.Movie
 
 object DataMapper {
@@ -12,7 +13,7 @@ object DataMapper {
                 id = it.id,
                 adult = it.adult,
                 backdropPath = it.backdropPath,
-                genres = it.genres,
+                genres = it.genres.toString(),
                 homepage = it.homepage,
                 imdbId = it.imdbId,
                 originalLanguage = it.originalLanguage,
@@ -42,7 +43,7 @@ object DataMapper {
                 id = it.id,
                 adult = it.adult,
                 backdropPath = it.backdropPath,
-                genres = it.genres,
+                genres = listOf(Genre(1, "1")),
                 homepage = it.homepage,
                 imdbId = it.imdbId,
                 originalLanguage = it.originalLanguage,
@@ -67,7 +68,7 @@ object DataMapper {
         id = input.id,
         adult = input.adult,
         backdropPath = input.backdropPath,
-        genres = input.genres,
+        genres = input.genres.toString(),
         homepage = input.homepage,
         imdbId = input.imdbId,
         originalLanguage = input.originalLanguage,
