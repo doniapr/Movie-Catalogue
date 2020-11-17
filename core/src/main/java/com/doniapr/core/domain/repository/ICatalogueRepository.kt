@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface ICatalogueRepository {
     fun getNowPlayingMovie(): Flow<Resource<List<Movie>>>
 
-    fun getDetailMovie(): Flow<Resource<Movie>>
+    fun getDetailMovie(id: String): Flow<Resource<Movie>>
 }

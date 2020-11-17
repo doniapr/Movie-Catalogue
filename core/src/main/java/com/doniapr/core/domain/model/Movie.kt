@@ -3,7 +3,7 @@ package com.doniapr.core.domain.model
 data class Movie (
     val adult: Boolean,
     val backdropPath: String,
-    val genres: List<Genre>,
+    val genres: List<Genre>?,
     val homepage: String,
     val id: Int,
     val imdbId: String,

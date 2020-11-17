@@ -1,10 +1,12 @@
 package com.doniapr.moviecatalogue
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.core.domain.model.Movie
+import com.doniapr.moviecatalogue.DetailMovieActivity.Companion.EXTRA_MOVIE_ID
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -32,6 +34,12 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         fun bindItem(movie: Movie) {
             with(itemView) {
                 txt_movie_title.text = movie.title
+
+                setOnClickListener {
+                    val intent = Intent(context, DetailMovieActivity::class.java)
+                    intent.putExtra(EXTRA_MOVIE_ID, movie.id.toString())
+                    context.startActivity(intent)
+                }
             }
         }
 

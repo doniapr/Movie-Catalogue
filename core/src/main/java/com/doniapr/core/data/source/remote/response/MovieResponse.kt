@@ -10,13 +10,13 @@ data class MovieResponse(
     @SerializedName("backdrop_path")
     val backdropPath: String,
     @SerializedName("genres")
-    val genres: List<Genre>,
+    val genres: List<Genre>? = null,
     @SerializedName("homepage")
-    val homepage: String,
+    val homepage: String? = null,
     @SerializedName("id")
     val id: Int,
     @SerializedName("imdb_id")
-    val imdbId: String,
+    val imdbId: String? = null,
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("original_title")
@@ -30,17 +30,17 @@ data class MovieResponse(
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("revenue")
-    val revenue: Int,
+    val revenue: Int? = null,
     @SerializedName("runtime")
-    val runtime: Int,
+    val runtime: Int? = null,
     @SerializedName("status")
-    val status: String,
+    val status: String? = null,
     @SerializedName("tagline")
-    val tagLine: String,
+    val tagLine: String? = null,
     @SerializedName("title")
     val title: String,
     @SerializedName("video")
-    val video: Boolean,
+    val video: Boolean? = null,
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")

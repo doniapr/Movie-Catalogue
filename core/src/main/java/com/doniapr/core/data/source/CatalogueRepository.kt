@@ -39,8 +39,25 @@ class CatalogueRepository(
 
         }.asFlow()
 
-    override fun getDetailMovie(): Flow<Resource<Movie>> {
-        TODO("Not yet implemented")
-    }
+    override fun getDetailMovie(id: String): Flow<Resource<Movie>> =
+            object : NetworkBoundResource<Movie, MovieResponse>(
+                    appExecutors
+            ) {
+                override fun loadFromDB(): Flow<Movie> {
+                    return localDataSource.getDetailMovie(id).map { DataMapper.mapEntityToDomain(it) }
+                }
+
+                override fun shouldFetch(data: Movie?): Boolean =
+                        true
+
+                override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
+                        remoteDataSource.getDetailMovie(id)
+
+                override suspend fun saveCallResult(data: MovieResponse) {
+                    val movie = DataMapper.mapResponseToEntity(data)
+                    localDataSource.updateDetailMovie(movie)
+                }
+
+            }.asFlow()
 
 }
