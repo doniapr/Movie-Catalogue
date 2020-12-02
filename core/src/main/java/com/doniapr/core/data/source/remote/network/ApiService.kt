@@ -1,10 +1,7 @@
 package com.doniapr.core.data.source.remote.network
 
 import com.doniapr.core.BuildConfig
-import com.doniapr.core.data.source.remote.response.ListMovieResponse
-import com.doniapr.core.data.source.remote.response.ListTvShowResponse
-import com.doniapr.core.data.source.remote.response.MovieResponse
-import com.doniapr.core.data.source.remote.response.TvShowResponse
+import com.doniapr.core.data.source.remote.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,6 +12,9 @@ interface ApiService {
 
     @GET("movie/{movieId}?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
     suspend fun getDetailMovie(@Path("movieId") id: String): MovieResponse
+
+    @GET("movie/{movieId}/reviews?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
+    suspend fun getMovieReview(@Path("movieId") id: String, @Query("page") page: Int): ListReviewResponse
 
     @GET("tv/on_the_air?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
     suspend fun getOnTheAirTv(@Query("page") page: Int): ListTvShowResponse

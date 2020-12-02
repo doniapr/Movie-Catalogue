@@ -6,12 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.Movie
+import com.doniapr.core.domain.model.Review
 import com.doniapr.core.domain.usecase.MovieUseCase
 
 class DetailMovieViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
-    var movie: LiveData<Resource<Movie>> = MutableLiveData<Resource<Movie>>()
+    var movie: LiveData<Resource<Movie>> = MutableLiveData()
+
+    var reviews: LiveData<Resource<List<Review>>> = MutableLiveData()
 
     fun setMovie(id: String){
         movie = movieUseCase.getDetailMovie(id).asLiveData()
+
+        reviews = movieUseCase.getMovieReview(id).asLiveData()
     }
+
 }

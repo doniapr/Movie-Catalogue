@@ -1,6 +1,7 @@
 package com.doniapr.moviecatalogue
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doniapr.core.data.Resource
@@ -28,6 +29,16 @@ class DetailMovieActivity : AppCompatActivity() {
                     is Resource.Loading -> txt_detail_movie_title.text = "Loading"
                     is Resource.Success -> txt_detail_movie_title.text = movie.data?.title
                     is Resource.Error -> txt_detail_movie_title.text = "Error"
+                }
+            }
+        })
+
+        detailMovieViewModel.reviews.observe(this, Observer { reviews ->
+            if (reviews != null) {
+                when (reviews) {
+                    is Resource.Loading -> Toast.makeText(this@DetailMovieActivity, "Loading", Toast.LENGTH_SHORT).show()
+                    is Resource.Success -> Toast.makeText(this@DetailMovieActivity, reviews.data?.get(0)?.author, Toast.LENGTH_SHORT).show()
+                    is Resource.Error -> Toast.makeText(this@DetailMovieActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }
         })
