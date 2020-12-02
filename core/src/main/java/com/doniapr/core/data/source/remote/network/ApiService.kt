@@ -16,6 +16,9 @@ interface ApiService {
     @GET("movie/{movieId}/reviews?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
     suspend fun getMovieReview(@Path("movieId") id: String, @Query("page") page: Int): ListReviewResponse
 
+    @GET("search/movie?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US&include_adult=false")
+    suspend fun searchMovie(@Query("query") query: String, @Query("page") page: Int): ListMovieResponse
+
     @GET("tv/on_the_air?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
     suspend fun getOnTheAirTv(@Query("page") page: Int): ListTvShowResponse
 

@@ -9,5 +9,6 @@ interface MovieUseCase {
     fun getNowPlayingMovie(): Flow<Resource<List<Movie>>>
     fun getDetailMovie(id: String): Flow<Resource<Movie>>
     fun getMovieReview(id: String): Flow<Resource<List<Review>>>
+    fun searchMovie(query: String): Flow<Resource<List<Movie>>>
 
 }

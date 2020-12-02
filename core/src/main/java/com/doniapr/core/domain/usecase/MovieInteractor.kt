@@ -12,4 +12,6 @@ class MovieInteractor(private val catalogueRepository: ICatalogueRepository): Mo
     override fun getDetailMovie(id: String): Flow<Resource<Movie>> = catalogueRepository.getDetailMovie(id)
 
     override fun getMovieReview(id: String): Flow<Resource<List<Review>>> = catalogueRepository.getMovieReview(id)
+
+    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> = catalogueRepository.searchMovie(query)
 }
