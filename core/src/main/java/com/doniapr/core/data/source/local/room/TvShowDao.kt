@@ -1,6 +1,8 @@
 package com.doniapr.core.data.source.local.room
 
 import androidx.room.*
+import com.doniapr.core.data.source.local.entity.MovieEntity
+import com.doniapr.core.data.source.local.entity.ReviewEntity
 import com.doniapr.core.data.source.local.entity.TvShowEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,4 +25,10 @@ interface TvShowDao {
 
     @Update
     fun updateFavoriteTvShow(tvShow: TvShowEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertReview(reviews: List<ReviewEntity>)
+
+    @Query("SELECT * FROM review WHERE id = :id AND is_movie = 0")
+    fun getTvReview(id: Int): Flow<List<ReviewEntity>>
 }

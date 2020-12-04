@@ -2,6 +2,7 @@ package com.doniapr.core.data.source.local.room
 
 import androidx.room.*
 import com.doniapr.core.data.source.local.entity.MovieEntity
+import com.doniapr.core.data.source.local.entity.ReviewEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,4 +24,10 @@ interface MovieDao {
 
     @Update
     fun updateFavoriteMovie(movie: MovieEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertReview(reviews: List<ReviewEntity>)
+
+    @Query("SELECT * FROM review WHERE catalogue_id = :id AND is_movie = 1")
+    fun getMovieReview(id: Int): Flow<List<ReviewEntity>>
 }

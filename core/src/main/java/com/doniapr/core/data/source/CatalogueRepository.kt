@@ -13,7 +13,8 @@ import com.doniapr.core.domain.model.Review
 import com.doniapr.core.domain.model.TvShow
 import com.doniapr.core.domain.repository.ICatalogueRepository
 import com.doniapr.core.utils.AppExecutors
-import com.doniapr.core.utils.DataMapper
+import com.doniapr.core.utils.MovieDataMapper
+import com.doniapr.core.utils.TvShowDataMapper
 import kotlinx.coroutines.flow.*
 
 class CatalogueRepository(
@@ -21,12 +22,13 @@ class CatalogueRepository(
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : ICatalogueRepository {
+
     override fun getNowPlayingMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>(
             appExecutors
         ) {
             override fun loadFromDB(): Flow<List<Movie>> {
-                return localDataSource.getAllMovie().map { DataMapper.mapEntitiesToDomain(it) }
+                return localDataSource.getAllMovie().map { MovieDataMapper.mapEntitiesToDomain(it) }
             }
 
             override fun shouldFetch(data: List<Movie>?): Boolean =
@@ -36,7 +38,7 @@ class CatalogueRepository(
                 remoteDataSource.getNowPlayingMovie(1)
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
-                val movieList = DataMapper.mapResponsesToEntities(data)
+                val movieList = MovieDataMapper.mapResponsesToEntities(data)
                 localDataSource.insertMovie(movieList)
             }
 
@@ -47,7 +49,7 @@ class CatalogueRepository(
                     appExecutors
             ) {
                 override fun loadFromDB(): Flow<Movie> {
-                    return localDataSource.getDetailMovie(id).map { DataMapper.mapEntityToDomain(it) }
+                    return localDataSource.getDetailMovie(id).map { MovieDataMapper.mapEntityToDomain(it) }
                 }
 
                 override fun shouldFetch(data: Movie?): Boolean =
@@ -57,7 +59,7 @@ class CatalogueRepository(
                         remoteDataSource.getDetailMovie(id)
 
                 override suspend fun saveCallResult(data: MovieResponse) {
-                    val movie = DataMapper.mapResponseToEntity(data)
+                    val movie = MovieDataMapper.mapResponseToEntity(data)
                     localDataSource.updateDetailMovie(movie)
                 }
 
@@ -67,8 +69,8 @@ class CatalogueRepository(
             object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
                     appExecutors
             ) {
-                override fun loadFromDB(): Flow<List<Review>>? {
-                    return null
+                override fun loadFromDB(): Flow<List<Review>> {
+                    return localDataSource.getMovieReview(id.toInt()).map { MovieDataMapper.mapReviewEntitiesToDomain(it) }
                 }
 
                 override fun shouldFetch(data: List<Review>?): Boolean =
@@ -78,35 +80,23 @@ class CatalogueRepository(
                         remoteDataSource.getMovieReview(id, 1)
 
                 override suspend fun saveCallResult(data: List<ReviewResponse>) {
+                    val reviews = MovieDataMapper.mapReviewResponsesToEntities(data, id.toInt())
+                    localDataSource.insertMovieReview(reviews)
                 }
 
             }.asFlow()
 
-    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> =
-            object : NetworkBoundResource<List<Movie>, List<MovieResponse>>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<List<Movie>>? {
-                    return null
-                }
+    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> {
+        TODO("Not yet implemented")
+    }
 
-                override fun shouldFetch(data: List<Movie>?): Boolean =
-                        data == null || data.isEmpty()
-
-                override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
-                        remoteDataSource.searchMovie(query, 1)
-
-                override suspend fun saveCallResult(data: List<MovieResponse>) {
-                }
-
-            }.asFlow()
 
     override fun getOnAirTv(): Flow<Resource<List<TvShow>>> =
             object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
                     appExecutors
             ) {
                 override fun loadFromDB(): Flow<List<TvShow>> {
-                    return localDataSource.getAllTvShow().map { DataMapper.mapEntitiesToDomainTv(it) }
+                    return localDataSource.getAllTvShow().map { TvShowDataMapper.mapEntitiesToDomain(it) }
                 }
 
                 override fun shouldFetch(data: List<TvShow>?): Boolean =
@@ -116,7 +106,7 @@ class CatalogueRepository(
                         remoteDataSource.getOnAirTv(1)
 
                 override suspend fun saveCallResult(data: List<TvShowResponse>) {
-                    val tvShowList = DataMapper.mapResponsesToEntitiesTv(data)
+                    val tvShowList = TvShowDataMapper.mapResponsesToEntities(data)
                     localDataSource.insertTvShow(tvShowList)
                 }
 
@@ -127,7 +117,7 @@ class CatalogueRepository(
                     appExecutors
             ) {
                 override fun loadFromDB(): Flow<TvShow> {
-                    return localDataSource.getDetailTvShow(id).map { DataMapper.mapEntityToDomainTv(it) }
+                    return localDataSource.getDetailTvShow(id).map { TvShowDataMapper.mapEntityToDomain(it) }
                 }
 
                 override fun shouldFetch(data: TvShow?): Boolean =
@@ -137,7 +127,7 @@ class CatalogueRepository(
                         remoteDataSource.getDetailTv(id)
 
                 override suspend fun saveCallResult(data: TvShowResponse) {
-                    val tvShow = DataMapper.mapResponseToEntityTv(data)
+                    val tvShow = TvShowDataMapper.mapResponseToEntity(data)
                     localDataSource.updateDetailTvShoe(tvShow)
                 }
             }.asFlow()
@@ -146,8 +136,8 @@ class CatalogueRepository(
             object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
                     appExecutors
             ) {
-                override fun loadFromDB(): Flow<List<Review>>? {
-                    return null
+                override fun loadFromDB(): Flow<List<Review>> {
+                    return localDataSource.getTvReview(id.toInt()).map { TvShowDataMapper.mapReviewEntitiesToDomain(it) }
                 }
 
                 override fun shouldFetch(data: List<Review>?): Boolean =
@@ -157,28 +147,14 @@ class CatalogueRepository(
                         remoteDataSource.getTvReview(id, 1)
 
                 override suspend fun saveCallResult(data: List<ReviewResponse>) {
+                    val reviews = TvShowDataMapper.mapReviewResponsesToEntities(data, id.toInt())
+                    localDataSource.insertTvReview(reviews)
                 }
 
             }.asFlow()
 
-    override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> =
-            object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<List<TvShow>>? {
-                    return null
-                }
-
-                override fun shouldFetch(data: List<TvShow>?): Boolean =
-                        data == null || data.isEmpty()
-
-                override suspend fun createCall(): Flow<ApiResponse<List<TvShowResponse>>> =
-                        remoteDataSource.searchTv(query, 1)
-
-                override suspend fun saveCallResult(data: List<TvShowResponse>) {
-                }
-
-            }.asFlow()
-
+    override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> {
+        TODO("Not yet implemented")
+    }
 
 }

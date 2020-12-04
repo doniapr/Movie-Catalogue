@@ -34,11 +34,15 @@ class DetailMovieActivity : AppCompatActivity() {
         })
 
         detailMovieViewModel.reviews.observe(this, Observer { reviews ->
-            if (reviews != null) {
+            if (reviews.data != null) {
+                var author: String? = "Kosong"
+                if (reviews.data!!.isNotEmpty() && reviews.data?.get(0) != null){
+                    author = reviews.data?.get(0)?.author
+                }
                 when (reviews) {
-                    is Resource.Loading -> Toast.makeText(this@DetailMovieActivity, "Loading", Toast.LENGTH_SHORT).show()
-                    is Resource.Success -> Toast.makeText(this@DetailMovieActivity, reviews.data?.get(0)?.author, Toast.LENGTH_SHORT).show()
-                    is Resource.Error -> Toast.makeText(this@DetailMovieActivity, "Error", Toast.LENGTH_SHORT).show()
+                    is Resource.Loading -> txt_detail_movie_review.text = "Loading"
+                    is Resource.Success -> txt_detail_movie_review.text = author
+                    is Resource.Error -> txt_detail_movie_review.text = "ERROR"
                 }
             }
         })
