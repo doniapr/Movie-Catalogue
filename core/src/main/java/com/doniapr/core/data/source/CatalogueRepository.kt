@@ -7,8 +7,10 @@ import com.doniapr.core.data.source.remote.RemoteDataSource
 import com.doniapr.core.data.source.remote.network.ApiResponse
 import com.doniapr.core.data.source.remote.response.MovieResponse
 import com.doniapr.core.data.source.remote.response.ReviewResponse
+import com.doniapr.core.data.source.remote.response.TvShowResponse
 import com.doniapr.core.domain.model.Movie
 import com.doniapr.core.domain.model.Review
+import com.doniapr.core.domain.model.TvShow
 import com.doniapr.core.domain.repository.ICatalogueRepository
 import com.doniapr.core.utils.AppExecutors
 import com.doniapr.core.utils.DataMapper
@@ -98,4 +100,85 @@ class CatalogueRepository(
                 }
 
             }.asFlow()
+
+    override fun getOnAirTv(): Flow<Resource<List<TvShow>>> =
+            object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
+                    appExecutors
+            ) {
+                override fun loadFromDB(): Flow<List<TvShow>> {
+                    return localDataSource.getAllTvShow().map { DataMapper.mapEntitiesToDomainTv(it) }
+                }
+
+                override fun shouldFetch(data: List<TvShow>?): Boolean =
+                        data == null || data.isEmpty()
+
+                override suspend fun createCall(): Flow<ApiResponse<List<TvShowResponse>>> =
+                        remoteDataSource.getOnAirTv(1)
+
+                override suspend fun saveCallResult(data: List<TvShowResponse>) {
+                    val tvShowList = DataMapper.mapResponsesToEntitiesTv(data)
+                    localDataSource.insertTvShow(tvShowList)
+                }
+
+            }.asFlow()
+
+    override fun getDetailTv(id: String): Flow<Resource<TvShow>> =
+            object : NetworkBoundResource<TvShow, TvShowResponse>(
+                    appExecutors
+            ) {
+                override fun loadFromDB(): Flow<TvShow> {
+                    return localDataSource.getDetailTvShow(id).map { DataMapper.mapEntityToDomainTv(it) }
+                }
+
+                override fun shouldFetch(data: TvShow?): Boolean =
+                        true
+
+                override suspend fun createCall(): Flow<ApiResponse<TvShowResponse>> =
+                        remoteDataSource.getDetailTv(id)
+
+                override suspend fun saveCallResult(data: TvShowResponse) {
+                    val tvShow = DataMapper.mapResponseToEntityTv(data)
+                    localDataSource.updateDetailTvShoe(tvShow)
+                }
+            }.asFlow()
+
+    override fun getTvReview(id: String): Flow<Resource<List<Review>>> =
+            object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
+                    appExecutors
+            ) {
+                override fun loadFromDB(): Flow<List<Review>>? {
+                    return null
+                }
+
+                override fun shouldFetch(data: List<Review>?): Boolean =
+                        data == null || data.isEmpty()
+
+                override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> =
+                        remoteDataSource.getTvReview(id, 1)
+
+                override suspend fun saveCallResult(data: List<ReviewResponse>) {
+                }
+
+            }.asFlow()
+
+    override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> =
+            object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
+                    appExecutors
+            ) {
+                override fun loadFromDB(): Flow<List<TvShow>>? {
+                    return null
+                }
+
+                override fun shouldFetch(data: List<TvShow>?): Boolean =
+                        data == null || data.isEmpty()
+
+                override suspend fun createCall(): Flow<ApiResponse<List<TvShowResponse>>> =
+                        remoteDataSource.searchTv(query, 1)
+
+                override suspend fun saveCallResult(data: List<TvShowResponse>) {
+                }
+
+            }.asFlow()
+
+
 }

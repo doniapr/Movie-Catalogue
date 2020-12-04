@@ -1,10 +1,12 @@
 package com.doniapr.core.data.source.local
 
 import com.doniapr.core.data.source.local.entity.MovieEntity
+import com.doniapr.core.data.source.local.entity.TvShowEntity
 import com.doniapr.core.data.source.local.room.MovieDao
+import com.doniapr.core.data.source.local.room.TvShowDao
 import kotlinx.coroutines.flow.Flow
 
-class LocalDataSource(private val movieDao: MovieDao) {
+class LocalDataSource(private val movieDao: MovieDao, private val tvShowDao: TvShowDao) {
     fun getAllMovie(): Flow<List<MovieEntity>> = movieDao.getAllMovie()
 
     fun getDetailMovie(id: String): Flow<MovieEntity> = movieDao.getDetailMovie(id)
@@ -18,5 +20,20 @@ class LocalDataSource(private val movieDao: MovieDao) {
     fun setFavoriteMovie(movie: MovieEntity, newState: Boolean){
         movie.isFavorite = newState
         movieDao.updateFavoriteMovie(movie)
+    }
+
+    fun getAllTvShow(): Flow<List<TvShowEntity>> = tvShowDao.getAllTvShow()
+
+    fun getDetailTvShow(id: String): Flow<TvShowEntity> = tvShowDao.getDetailTv(id)
+
+    fun getFavoriteTvShow(): Flow<List<TvShowEntity>> = tvShowDao.getFavoriteTvShow()
+
+    suspend fun insertTvShow(tvShowList: List<TvShowEntity>) = tvShowDao.insertTvShow(tvShowList)
+
+    suspend fun updateDetailTvShoe(tvShow: TvShowEntity) = tvShowDao.updateDetailMTvShow(tvShow)
+
+    fun setFavoriteTvShow(tvShow: TvShowEntity, newState: Boolean) {
+        tvShow.isFavorite = newState
+        tvShowDao.updateFavoriteTvShow(tvShow)
     }
 }

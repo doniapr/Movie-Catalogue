@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit
 
 val databaseModule = module {
     factory { get<CatalogueDatabase>().movieDao() }
+    factory { get<CatalogueDatabase>().tvShowDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -48,7 +49,7 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { LocalDataSource(get()) }
+    single { LocalDataSource(get(), get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
 
