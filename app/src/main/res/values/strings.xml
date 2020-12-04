@@ -2,4 +2,9 @@
     <string name="app_name">Movie Catalogue</string>
     <string name="title">Title</string>
     <string name="error">Error</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">Tv Show</string>
+    <string name="favorite">Favorite</string>
 </resources>
