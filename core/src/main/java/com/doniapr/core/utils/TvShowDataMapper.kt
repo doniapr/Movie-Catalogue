@@ -117,7 +117,7 @@ object TvShowDataMapper {
                         type = it.type?:"",
                         voteAverage = it.voteAverage,
                         voteCount = it.voteCount,
-                        isFavorite = false
+                        isFavorite = it.isFavorite
                 )
             }
 
@@ -148,7 +148,7 @@ object TvShowDataMapper {
                 type = input.type?:"",
                 voteAverage = input.voteAverage,
                 voteCount = input.voteCount,
-                isFavorite = false
+                isFavorite = input.isFavorite
         )
     }
 

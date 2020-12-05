@@ -39,7 +39,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         fun bindItem(tvShow: TvShow) {
             with(itemView) {
                 this.setOnClickListener {
-                    val intent = Intent(context, DetailMovieActivity::class.java).apply {
+                    val intent = Intent(context, DetailTvShowActivity::class.java).apply {
                         putExtra(DetailTvShowActivity.EXTRA_TV_SHOW_ID, tvShow.id.toString())
                     }
                     context?.startActivity(intent)
