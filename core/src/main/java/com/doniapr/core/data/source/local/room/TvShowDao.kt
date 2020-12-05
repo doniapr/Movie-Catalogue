@@ -29,6 +29,6 @@ interface TvShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReview(reviews: List<ReviewEntity>)
 
-    @Query("SELECT * FROM review WHERE id = :id AND is_movie = 0")
+    @Query("SELECT * FROM review WHERE catalogue_id = :id AND is_movie = 0")
     fun getTvReview(id: Int): Flow<List<ReviewEntity>>
 }

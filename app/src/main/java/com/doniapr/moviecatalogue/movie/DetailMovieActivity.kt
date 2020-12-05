@@ -61,7 +61,7 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         })
 
-        detailMovieViewModel.reviews.observe(this, Observer { reviews ->
+        detailMovieViewModel.reviews.observe(this, { reviews ->
             if (reviews != null) {
                 when (reviews) {
                     is Resource.Success -> {

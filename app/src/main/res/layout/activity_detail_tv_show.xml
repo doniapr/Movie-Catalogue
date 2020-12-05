@@ -191,6 +191,67 @@
                         android:textColor="@android:color/white"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:layout_constraintTop_toBottomOf="@id/cv_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/review"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/padding"
+                        android:layout_marginStart="@dimen/padding"
+                        android:textColor="@android:color/white" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_review_tv_show"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:elevation="10dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/txt_no_review_found"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_review"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/padding"
+                        android:layout_marginStart="@dimen/padding"
+                        android:layout_marginEnd="@dimen/padding"
+                        android:textColor="@android:color/white" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_review_tv_show"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_review"
+                        android:layout_margin="@dimen/activity_vertical_margin"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,13 +7,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.TvShow
 import com.doniapr.moviecatalogue.R
+import com.doniapr.moviecatalogue.ReviewAdapter
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
+import kotlinx.android.synthetic.main.activity_detail_tv_show.txt_no_review_found
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailTvShowActivity : AppCompatActivity() {
@@ -37,6 +40,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         }
 
         val id = intent.getStringExtra(EXTRA_TV_SHOW_ID)
+        val reviewAdapter = ReviewAdapter()
         if (id != null) {
             detailTvShowViewModel.setTvShow(id)
         }
@@ -51,15 +55,43 @@ class DetailTvShowActivity : AppCompatActivity() {
                     is Resource.Error -> {
                         progress_bar_detail_tv_show.visibility = View.GONE
                         Toast.makeText(
-                            this@DetailTvShowActivity,
-                            tvShow.message,
-                            Toast.LENGTH_SHORT
+                                this@DetailTvShowActivity,
+                                tvShow.message,
+                                Toast.LENGTH_SHORT
                         )
-                            .show()
+                                .show()
                     }
                 }
             }
         })
+
+        detailTvShowViewModel.reviews.observe(this, { reviews ->
+            if (reviews != null) {
+                when (reviews) {
+                    is Resource.Success -> {
+                        progress_bar_review_tv_show.visibility = View.GONE
+
+                        if (reviews.data != null && reviews.data!!.isNotEmpty()) {
+                            txt_no_review_found.visibility = View.GONE
+                            reviewAdapter.setData(reviews.data)
+                        } else {
+                            txt_no_review_found.visibility = View.VISIBLE
+                        }
+                    }
+                    is Resource.Loading -> progress_bar_review_tv_show.visibility = View.VISIBLE
+                    is Resource.Error -> {
+                        progress_bar_review_tv_show.visibility = View.GONE
+                        txt_no_review_found.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
+
+        with(rv_review_tv_show) {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = reviewAdapter
+        }
     }
 
     private fun setContent() {
@@ -77,13 +109,13 @@ class DetailTvShowActivity : AppCompatActivity() {
         }
 
         Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.posterPath)
-            .placeholder(R.drawable.poster_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(img_poster_detail_tv_show)
+                .placeholder(R.drawable.poster_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(img_poster_detail_tv_show)
         Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.backdropPath)
-            .placeholder(R.drawable.poster_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(img_banner_tv_show)
+                .placeholder(R.drawable.poster_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(img_banner_tv_show)
 
 
     }

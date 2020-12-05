@@ -192,7 +192,7 @@ object TvShowDataMapper {
             val review = ReviewEntity(
                     id = it.id,
                     catalogueId = catalogueId,
-                    isMovie = true,
+                    isMovie = false,
                     author = it.author,
                     content = it.content,
                     url = it.url,
