@@ -101,7 +101,11 @@ class DetailTvShowActivity : AppCompatActivity() {
             val detailTitle = "${it.name} (${it.firstAirDate.slice(0..3)})"
             val runtime = "${it.episodeRunTime} menit"
 
-            txt_genre_detail_tv_show.text = it.genres.toString()
+            val genres = ArrayList<String>()
+            for(genre in it.genres!!){
+                genres.add(genre.name)
+            }
+            txt_genre_detail_tv_show.text = genres.joinToString()
             txt_content_overview_tv_show.text = it.overview
             txt_content_release_date_tv_show.text = it.firstAirDate
             txt_content_runtime_tv_show.text = runtime

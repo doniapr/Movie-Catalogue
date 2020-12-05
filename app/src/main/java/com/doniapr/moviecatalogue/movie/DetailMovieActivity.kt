@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.Movie
+import com.doniapr.core.utils.MovieDataMapper
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -97,7 +98,11 @@ class DetailMovieActivity : AppCompatActivity() {
             val detailTitle = "${it.title} (${it.releaseDate.slice(0..3)})"
             val runtime = "${it.runtime} menit"
 
-            txt_genre_detail.text = it.genres.toString()
+            val genres = ArrayList<String>()
+            for(genre in it.genres!!){
+                genres.add(genre.name)
+            }
+            txt_genre_detail.text = genres.joinToString()
             txt_content_overview.text = it.overview
             txt_content_release_date.text = it.releaseDate
             txt_content_runtime.text = runtime
