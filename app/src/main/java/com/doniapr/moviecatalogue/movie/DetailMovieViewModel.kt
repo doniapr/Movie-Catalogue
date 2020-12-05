@@ -1,4 +1,4 @@
-package com.doniapr.moviecatalogue
+package com.doniapr.moviecatalogue.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,8 @@ import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.Movie
 import com.doniapr.core.domain.model.Review
 import com.doniapr.core.domain.usecase.MovieUseCase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DetailMovieViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
     var movie: LiveData<Resource<Movie>> = MutableLiveData()
@@ -20,4 +22,9 @@ class DetailMovieViewModel(private val movieUseCase: MovieUseCase): ViewModel() 
         reviews = movieUseCase.getMovieReview(id).asLiveData()
     }
 
+    fun changeFavoriteState(movie: Movie, state: Boolean){
+        GlobalScope.launch {
+            movieUseCase.setFavoriteMovie(movie, state)
+        }
+    }
 }

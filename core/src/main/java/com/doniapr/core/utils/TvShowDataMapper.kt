@@ -114,7 +114,7 @@ object TvShowDataMapper {
                         posterPath = it.posterPath,
                         status = it.status ?: "",
                         tagLine = it.tagLine ?: "",
-                        type = it.type,
+                        type = it.type?:"",
                         voteAverage = it.voteAverage,
                         voteCount = it.voteCount,
                         isFavorite = false
@@ -145,7 +145,7 @@ object TvShowDataMapper {
                 posterPath = input.posterPath,
                 status = input.status ?: "",
                 tagLine = input.tagLine ?: "",
-                type = input.type,
+                type = input.type?:"",
                 voteAverage = input.voteAverage,
                 voteCount = input.voteCount,
                 isFavorite = false

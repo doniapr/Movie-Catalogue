@@ -17,6 +17,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
         buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+        buildConfigField "String", "BASE_URL_IMAGE", '"https://image.tmdb.org/t/p/w500"'
         buildConfigField "String", "TMDB_API_KEY", '"e4891d0e71c90b3a33ba723876aaa030"'
     }
 

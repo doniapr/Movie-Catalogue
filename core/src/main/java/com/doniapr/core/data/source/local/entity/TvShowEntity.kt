@@ -28,13 +28,13 @@ data class TvShowEntity(
         var firstAirDate: String,
 
         @ColumnInfo(name = "homepage")
-        var homepage: String,
+        var homepage: String?,
 
         @ColumnInfo(name = "inProduction")
         var inProduction: Boolean?,
 
         @ColumnInfo(name = "lastAirDate")
-        var lastAirDate: String,
+        var lastAirDate: String?,
 
         @ColumnInfo(name = "name")
         var name: String,
@@ -61,13 +61,13 @@ data class TvShowEntity(
         var posterPath: String,
 
         @ColumnInfo(name = "status")
-        var status: String,
+        var status: String?,
 
         @ColumnInfo(name = "tagLine")
-        var tagLine: String,
+        var tagLine: String?,
 
         @ColumnInfo(name = "type")
-        var type: String,
+        var type: String?,
 
         @ColumnInfo(name = "voteAverage")
         var voteAverage: Double,

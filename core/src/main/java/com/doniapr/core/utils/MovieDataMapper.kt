@@ -2,14 +2,11 @@ package com.doniapr.core.utils
 
 import com.doniapr.core.data.source.local.entity.MovieEntity
 import com.doniapr.core.data.source.local.entity.ReviewEntity
-import com.doniapr.core.data.source.local.entity.TvShowEntity
 import com.doniapr.core.data.source.remote.response.MovieResponse
 import com.doniapr.core.data.source.remote.response.ReviewResponse
-import com.doniapr.core.data.source.remote.response.TvShowResponse
 import com.doniapr.core.domain.model.Genre
 import com.doniapr.core.domain.model.Movie
 import com.doniapr.core.domain.model.Review
-import com.doniapr.core.domain.model.TvShow
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 
@@ -140,29 +137,35 @@ object MovieDataMapper {
             )
     }
 
-    fun mapDomainToEntity(input: Movie) = MovieEntity(
-        id = input.id,
-        adult = input.adult,
-        backdropPath = input.backdropPath,
-        genres = input.genres.toString(),
-        homepage = input.homepage,
-        imdbId = input.imdbId,
-        originalLanguage = input.originalLanguage,
-        originalTitle = input.originalTitle,
-        overview = input.overview,
-        popularity = input.popularity,
-        posterPath = input.posterPath,
-        releaseDate = input.releaseDate,
-        revenue = input.revenue,
-        runtime = input.runtime,
-        status = input.status,
-        tagLine = input.tagLine,
-        title = input.title,
-        video = input.video,
-        voteAverage = input.voteAverage,
-        voteCount = input.voteCount,
-        isFavorite = input.isFavorite
-    )
+    fun mapDomainToEntity(input: Movie): MovieEntity {
+        var genre = ""
+        if (input.genres != null && input.genres.isNotEmpty()){
+            genre = Gson().toJson(input.genres)
+        }
+        return MovieEntity(
+            id = input.id,
+            adult = input.adult,
+            backdropPath = input.backdropPath,
+            genres = genre,
+            homepage = input.homepage?: "",
+            imdbId = input.imdbId?: "",
+            originalLanguage = input.originalLanguage,
+            originalTitle = input.originalTitle,
+            overview = input.overview,
+            popularity = input.popularity,
+            posterPath = input.posterPath,
+            releaseDate = input.releaseDate,
+            revenue = input.revenue?: 0,
+            runtime = input.runtime?: 0,
+            status = input.status?: "",
+            tagLine = input.tagLine?: "",
+            title = input.title,
+            video = input.video?: false,
+            voteAverage = input.voteAverage,
+            voteCount = input.voteCount,
+            isFavorite = input.isFavorite
+        )
+    }
 
     fun mapReviewResponsesToEntities(input: List<ReviewResponse>, catalogueId: Int): List<ReviewEntity> {
         val reviewList = ArrayList<ReviewEntity>()

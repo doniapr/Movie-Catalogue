@@ -23,7 +23,7 @@ interface MovieDao {
     suspend fun updateDetailMovie(movie: MovieEntity)
 
     @Update
-    fun updateFavoriteMovie(movie: MovieEntity)
+    suspend fun updateFavoriteMovie(movie: MovieEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReview(reviews: List<ReviewEntity>)

@@ -53,7 +53,7 @@ class CatalogueRepository(
                 }
 
                 override fun shouldFetch(data: Movie?): Boolean =
-                        true
+                    data?.genres == null || data.genres.isEmpty()
 
                 override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
                         remoteDataSource.getDetailMovie(id)
@@ -88,6 +88,13 @@ class CatalogueRepository(
 
     override fun searchMovie(query: String): Flow<Resource<List<Movie>>> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun setFavoriteMovie(movie: Movie, newState: Boolean) {
+        val movieEntity = MovieDataMapper.mapDomainToEntity(movie)
+
+        localDataSource.setFavoriteMovie(movieEntity, newState)
+
     }
 
 

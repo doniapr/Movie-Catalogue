@@ -15,6 +15,8 @@ interface ICatalogueRepository {
 
     fun searchMovie(query: String): Flow<Resource<List<Movie>>>
 
+    suspend fun setFavoriteMovie(movie: Movie, newState: Boolean)
+
     fun getOnAirTv(): Flow<Resource<List<TvShow>>>
 
     fun getDetailTv(id: String): Flow<Resource<TvShow>>

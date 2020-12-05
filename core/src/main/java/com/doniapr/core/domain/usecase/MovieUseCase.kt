@@ -10,5 +10,6 @@ interface MovieUseCase {
     fun getDetailMovie(id: String): Flow<Resource<Movie>>
     fun getMovieReview(id: String): Flow<Resource<List<Review>>>
     fun searchMovie(query: String): Flow<Resource<List<Movie>>>
+    suspend fun setFavoriteMovie(movie: Movie, newState: Boolean)
 
 }

@@ -3,6 +3,8 @@ package com.doniapr.moviecatalogue
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.doniapr.moviecatalogue.movie.MovieFragment
+import com.doniapr.moviecatalogue.tvshow.TvShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,18 +17,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_movie -> {
                     fragment = MovieFragment()
                     changeFragment(fragment)
+                    main_toolbar.title = resources.getString(R.string.movie)
 
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.menu_tv_show -> {
                     fragment = TvShowFragment()
                     changeFragment(fragment)
+                    main_toolbar.title = resources.getString(R.string.tv_show)
 
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.menu_favorite -> {
                     fragment = FavoriteFragment()
                     changeFragment(fragment)
+                    main_toolbar.title = resources.getString(R.string.favorite)
 
                     return@OnNavigationItemSelectedListener true
                 }
