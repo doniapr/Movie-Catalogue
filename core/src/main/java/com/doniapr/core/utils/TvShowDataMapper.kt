@@ -153,29 +153,41 @@ object TvShowDataMapper {
     }
 
 
-    fun mapDomainToEntity(input: Movie) = MovieEntity(
-        id = input.id,
-        adult = input.adult,
-        backdropPath = input.backdropPath,
-        genres = input.genres.toString(),
-        homepage = input.homepage,
-        imdbId = input.imdbId,
-        originalLanguage = input.originalLanguage,
-        originalTitle = input.originalTitle,
-        overview = input.overview,
-        popularity = input.popularity,
-        posterPath = input.posterPath,
-        releaseDate = input.releaseDate,
-        revenue = input.revenue,
-        runtime = input.runtime,
-        status = input.status,
-        tagLine = input.tagLine,
-        title = input.title,
-        video = input.video,
-        voteAverage = input.voteAverage,
-        voteCount = input.voteCount,
-        isFavorite = input.isFavorite
-    )
+    fun mapDomainToEntity(input: TvShow): TvShowEntity {
+        var genre = ""
+        var episodeRunTime = ""
+        if (input.genres != null && input.genres.isNotEmpty()){
+            genre = Gson().toJson(input.genres)
+        }
+        if (input.genres != null && input.genres.isNotEmpty()){
+            episodeRunTime = input.episodeRunTime
+        }
+
+        return TvShowEntity(
+            id = input.id,
+            backdropPath = input.backdropPath,
+            episodeRunTime = episodeRunTime,
+            genres = genre,
+            firstAirDate = input.firstAirDate,
+            homepage = input.homepage ?: "",
+            inProduction = input.inProduction,
+            lastAirDate = input.lastAirDate ?: "",
+            name = input.name,
+            numberOfEpisodes = input.numberOfEpisodes,
+            numberOfSeasons = input.numberOfSeasons,
+            originalLanguage = input.originalLanguage,
+            originalName = input.originalName,
+            overview = input.overview,
+            popularity = input.popularity,
+            posterPath = input.posterPath,
+            status = input.status ?: "",
+            tagLine = input.tagLine ?: "",
+            type = input.type,
+            voteAverage = input.voteAverage,
+            voteCount = input.voteCount,
+            isFavorite = input.isFavorite
+        )
+    }
 
     fun mapReviewResponsesToEntities(input: List<ReviewResponse>, catalogueId: Int): List<ReviewEntity> {
         val reviewList = ArrayList<ReviewEntity>()

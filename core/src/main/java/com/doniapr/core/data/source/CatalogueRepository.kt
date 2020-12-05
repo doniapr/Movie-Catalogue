@@ -15,7 +15,9 @@ import com.doniapr.core.domain.repository.ICatalogueRepository
 import com.doniapr.core.utils.AppExecutors
 import com.doniapr.core.utils.MovieDataMapper
 import com.doniapr.core.utils.TvShowDataMapper
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class CatalogueRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -92,9 +94,7 @@ class CatalogueRepository(
 
     override suspend fun setFavoriteMovie(movie: Movie, newState: Boolean) {
         val movieEntity = MovieDataMapper.mapDomainToEntity(movie)
-
         localDataSource.setFavoriteMovie(movieEntity, newState)
-
     }
 
 
@@ -128,7 +128,7 @@ class CatalogueRepository(
                 }
 
                 override fun shouldFetch(data: TvShow?): Boolean =
-                        true
+                    data?.genres == null || data.genres.isEmpty()
 
                 override suspend fun createCall(): Flow<ApiResponse<TvShowResponse>> =
                         remoteDataSource.getDetailTv(id)
@@ -162,6 +162,13 @@ class CatalogueRepository(
 
     override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> {
         TODO("Not yet implemented")
+    }
+
+    override fun setFavoriteTvShow(tvShow: TvShow, newState: Boolean) {
+        GlobalScope.launch {
+            val tvShowEntity = TvShowDataMapper.mapDomainToEntity(tvShow)
+            localDataSource.setFavoriteTvShow(tvShowEntity, newState)
+        }
     }
 
 }
