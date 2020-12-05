@@ -1,13 +1,10 @@
 package com.doniapr.core.utils
 
-import com.doniapr.core.data.source.local.entity.MovieEntity
 import com.doniapr.core.data.source.local.entity.ReviewEntity
 import com.doniapr.core.data.source.local.entity.TvShowEntity
-import com.doniapr.core.data.source.remote.response.MovieResponse
 import com.doniapr.core.data.source.remote.response.ReviewResponse
 import com.doniapr.core.data.source.remote.response.TvShowResponse
 import com.doniapr.core.domain.model.Genre
-import com.doniapr.core.domain.model.Movie
 import com.doniapr.core.domain.model.Review
 import com.doniapr.core.domain.model.TvShow
 import com.google.gson.Gson
@@ -57,10 +54,10 @@ object TvShowDataMapper {
     fun mapResponseToEntity(input: TvShowResponse): TvShowEntity {
         var genre = ""
         var episodeRunTime = ""
-        if (input.genres != null && input.genres.isNotEmpty()){
+        if (input.genres != null && input.genres.isNotEmpty()) {
             genre = Gson().toJson(input.genres)
         }
-        if (input.genres != null && input.genres.isNotEmpty()){
+        if (input.genres != null && input.genres.isNotEmpty()) {
             episodeRunTime = input.episodeRunTime.joinToString()
         }
         return TvShowEntity(
@@ -92,21 +89,21 @@ object TvShowDataMapper {
     fun mapEntitiesToDomain(input: List<TvShowEntity>): List<TvShow> =
             input.map {
                 val listGenre = ArrayList<Genre>()
-                if (it.genres != null && it.genres?.isNotEmpty()!!){
+                if (it.genres != null && it.genres?.isNotEmpty()!!) {
                     listGenre.addAll(setUpGenre(it.genres!!))
                 }
                 TvShow(
                         id = it.id,
                         backdropPath = it.backdropPath,
-                        episodeRunTime = it.episodeRunTime?:"",
+                        episodeRunTime = it.episodeRunTime ?: "",
                         genres = listGenre,
                         firstAirDate = it.firstAirDate,
                         homepage = it.homepage ?: "",
-                        inProduction = it.inProduction?:false,
+                        inProduction = it.inProduction ?: false,
                         lastAirDate = it.lastAirDate ?: "",
                         name = it.name,
-                        numberOfEpisodes = it.numberOfEpisodes?:0,
-                        numberOfSeasons = it.numberOfSeasons?:0,
+                        numberOfEpisodes = it.numberOfEpisodes ?: 0,
+                        numberOfSeasons = it.numberOfSeasons ?: 0,
                         originalLanguage = it.originalLanguage,
                         originalName = it.originalName,
                         overview = it.overview,
@@ -114,7 +111,7 @@ object TvShowDataMapper {
                         posterPath = it.posterPath,
                         status = it.status ?: "",
                         tagLine = it.tagLine ?: "",
-                        type = it.type?:"",
+                        type = it.type ?: "",
                         voteAverage = it.voteAverage,
                         voteCount = it.voteCount,
                         isFavorite = it.isFavorite
@@ -123,21 +120,21 @@ object TvShowDataMapper {
 
     fun mapEntityToDomain(input: TvShowEntity): TvShow {
         val listGenre = ArrayList<Genre>()
-        if (input.genres != null && input.genres?.isNotEmpty()!!){
+        if (input.genres != null && input.genres?.isNotEmpty()!!) {
             listGenre.addAll(setUpGenre(input.genres!!))
         }
         return TvShow(
                 id = input.id,
                 backdropPath = input.backdropPath,
-                episodeRunTime = input.episodeRunTime?: "",
+                episodeRunTime = input.episodeRunTime ?: "",
                 genres = listGenre,
                 firstAirDate = input.firstAirDate,
                 homepage = input.homepage ?: "",
-                inProduction = input.inProduction?: false,
+                inProduction = input.inProduction ?: false,
                 lastAirDate = input.lastAirDate ?: "",
                 name = input.name,
-                numberOfEpisodes = input.numberOfEpisodes?: 0,
-                numberOfSeasons = input.numberOfSeasons?: 0,
+                numberOfEpisodes = input.numberOfEpisodes ?: 0,
+                numberOfSeasons = input.numberOfSeasons ?: 0,
                 originalLanguage = input.originalLanguage,
                 originalName = input.originalName,
                 overview = input.overview,
@@ -145,7 +142,7 @@ object TvShowDataMapper {
                 posterPath = input.posterPath,
                 status = input.status ?: "",
                 tagLine = input.tagLine ?: "",
-                type = input.type?:"",
+                type = input.type ?: "",
                 voteAverage = input.voteAverage,
                 voteCount = input.voteCount,
                 isFavorite = input.isFavorite
@@ -156,36 +153,36 @@ object TvShowDataMapper {
     fun mapDomainToEntity(input: TvShow): TvShowEntity {
         var genre = ""
         var episodeRunTime = ""
-        if (input.genres != null && input.genres.isNotEmpty()){
+        if (input.genres != null && input.genres.isNotEmpty()) {
             genre = Gson().toJson(input.genres)
         }
-        if (input.genres != null && input.genres.isNotEmpty()){
+        if (input.genres != null && input.genres.isNotEmpty()) {
             episodeRunTime = input.episodeRunTime
         }
 
         return TvShowEntity(
-            id = input.id,
-            backdropPath = input.backdropPath,
-            episodeRunTime = episodeRunTime,
-            genres = genre,
-            firstAirDate = input.firstAirDate,
-            homepage = input.homepage ?: "",
-            inProduction = input.inProduction,
-            lastAirDate = input.lastAirDate ?: "",
-            name = input.name,
-            numberOfEpisodes = input.numberOfEpisodes,
-            numberOfSeasons = input.numberOfSeasons,
-            originalLanguage = input.originalLanguage,
-            originalName = input.originalName,
-            overview = input.overview,
-            popularity = input.popularity,
-            posterPath = input.posterPath,
-            status = input.status ?: "",
-            tagLine = input.tagLine ?: "",
-            type = input.type,
-            voteAverage = input.voteAverage,
-            voteCount = input.voteCount,
-            isFavorite = input.isFavorite
+                id = input.id,
+                backdropPath = input.backdropPath,
+                episodeRunTime = episodeRunTime,
+                genres = genre,
+                firstAirDate = input.firstAirDate,
+                homepage = input.homepage ?: "",
+                inProduction = input.inProduction,
+                lastAirDate = input.lastAirDate ?: "",
+                name = input.name,
+                numberOfEpisodes = input.numberOfEpisodes,
+                numberOfSeasons = input.numberOfSeasons,
+                originalLanguage = input.originalLanguage,
+                originalName = input.originalName,
+                overview = input.overview,
+                popularity = input.popularity,
+                posterPath = input.posterPath,
+                status = input.status ?: "",
+                tagLine = input.tagLine ?: "",
+                type = input.type,
+                voteAverage = input.voteAverage,
+                voteCount = input.voteCount,
+                isFavorite = input.isFavorite
         )
     }
 
@@ -224,10 +221,10 @@ object TvShowDataMapper {
         val listGenre = ArrayList<Genre>()
         val obj = Gson().fromJson(genreStr, List::class.java)
 
-        for (genreObjStr in obj){
+        for (genreObjStr in obj) {
             val genreObj = genreObjStr as LinkedTreeMap<*, *>
-            val genreId: Double = (genreObj["id"]?:0) as Double
-            val genre = Genre(genreId.toInt(), (genreObj["name"] ?:"") as String)
+            val genreId: Double = (genreObj["id"] ?: 0) as Double
+            val genre = Genre(genreId.toInt(), (genreObj["name"] ?: "") as String)
 
 
             listGenre.add(genre)

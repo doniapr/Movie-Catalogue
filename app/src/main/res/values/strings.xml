@@ -14,4 +14,8 @@
     <string name="release_date">Release Date</string>
     <string name="runtime">Runtime</string>
     <string name="banner_tv_show">Banner Tv Show</string>
+    <string name="author">Author</string>
+    <string name="content">Content</string>
+    <string name="review">Review</string>
+    <string name="no_review">No Review Found</string>
 </resources>
