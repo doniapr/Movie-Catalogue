@@ -1,5 +1,7 @@
 package com.doniapr.moviecatalogue
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -29,11 +31,9 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.menu_favorite -> {
-                    fragment = FavoriteFragment()
-                    changeFragment(fragment)
-                    main_toolbar.title = resources.getString(R.string.favorite)
-
-                    return@OnNavigationItemSelectedListener true
+                    val uri = Uri.parse("moviecatalogue://favorite")
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                    return@OnNavigationItemSelectedListener false
                 }
                 else -> throw Throwable("Unknown item Id")
             }

@@ -15,7 +15,9 @@ interface ICatalogueRepository {
 
     fun searchMovie(query: String): Flow<Resource<List<Movie>>>
 
-    suspend fun setFavoriteMovie(movie: Movie, newState: Boolean)
+    fun getFavoriteMovie(): Flow<List<Movie>>
+
+    fun setFavoriteMovie(movie: Movie, newState: Boolean)
 
     fun getOnAirTv(): Flow<Resource<List<TvShow>>>
 
@@ -24,6 +26,8 @@ interface ICatalogueRepository {
     fun getTvReview(id: String): Flow<Resource<List<Review>>>
 
     fun searchTvShow(query: String): Flow<Resource<List<TvShow>>>
+
+    fun getFavoriteTvShow(): Flow<List<TvShow>>
 
     fun setFavoriteTvShow(tvShow: TvShow, newState: Boolean)
 }

@@ -15,9 +15,8 @@ import com.doniapr.core.domain.repository.ICatalogueRepository
 import com.doniapr.core.utils.AppExecutors
 import com.doniapr.core.utils.MovieDataMapper
 import com.doniapr.core.utils.TvShowDataMapper
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CatalogueRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -47,125 +46,138 @@ class CatalogueRepository(
         }.asFlow()
 
     override fun getDetailMovie(id: String): Flow<Resource<Movie>> =
-            object : NetworkBoundResource<Movie, MovieResponse>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<Movie> {
-                    return localDataSource.getDetailMovie(id).map { MovieDataMapper.mapEntityToDomain(it) }
-                }
+        object : NetworkBoundResource<Movie, MovieResponse>(
+            appExecutors
+        ) {
+            override fun loadFromDB(): Flow<Movie> {
+                return localDataSource.getDetailMovie(id)
+                    .map { MovieDataMapper.mapEntityToDomain(it) }
+            }
 
-                override fun shouldFetch(data: Movie?): Boolean =
-                    data?.genres == null || data.genres.isEmpty()
+            override fun shouldFetch(data: Movie?): Boolean =
+                data?.genres == null || data.genres.isEmpty()
 
-                override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
-                        remoteDataSource.getDetailMovie(id)
+            override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
+                remoteDataSource.getDetailMovie(id)
 
-                override suspend fun saveCallResult(data: MovieResponse) {
-                    val movie = MovieDataMapper.mapResponseToEntity(data)
-                    localDataSource.updateDetailMovie(movie)
-                }
+            override suspend fun saveCallResult(data: MovieResponse) {
+                val movie = MovieDataMapper.mapResponseToEntity(data)
+                localDataSource.updateDetailMovie(movie)
+            }
 
-            }.asFlow()
+        }.asFlow()
 
     override fun getMovieReview(id: String): Flow<Resource<List<Review>>> =
-            object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<List<Review>> {
-                    return localDataSource.getMovieReview(id.toInt()).map { MovieDataMapper.mapReviewEntitiesToDomain(it) }
-                }
+        object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
+            appExecutors
+        ) {
+            override fun loadFromDB(): Flow<List<Review>> {
+                return localDataSource.getMovieReview(id.toInt())
+                    .map { MovieDataMapper.mapReviewEntitiesToDomain(it) }
+            }
 
-                override fun shouldFetch(data: List<Review>?): Boolean =
-                        data == null || data.isEmpty()
+            override fun shouldFetch(data: List<Review>?): Boolean =
+                data == null || data.isEmpty()
 
-                override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> =
-                        remoteDataSource.getMovieReview(id, 1)
+            override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> =
+                remoteDataSource.getMovieReview(id, 1)
 
-                override suspend fun saveCallResult(data: List<ReviewResponse>) {
-                    val reviews = MovieDataMapper.mapReviewResponsesToEntities(data, id.toInt())
-                    localDataSource.insertMovieReview(reviews)
-                }
+            override suspend fun saveCallResult(data: List<ReviewResponse>) {
+                val reviews = MovieDataMapper.mapReviewResponsesToEntities(data, id.toInt())
+                localDataSource.insertMovieReview(reviews)
+            }
 
-            }.asFlow()
+        }.asFlow()
 
     override fun searchMovie(query: String): Flow<Resource<List<Movie>>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun setFavoriteMovie(movie: Movie, newState: Boolean) {
-        val movieEntity = MovieDataMapper.mapDomainToEntity(movie)
-        localDataSource.setFavoriteMovie(movieEntity, newState)
+    override fun getFavoriteMovie(): Flow<List<Movie>> =
+        localDataSource.getFavoriteMovie().map { MovieDataMapper.mapEntitiesToDomain(it) }
+
+    override fun setFavoriteMovie(movie: Movie, newState: Boolean) {
+        appExecutors.diskIO().execute {
+            val movieEntity = MovieDataMapper.mapDomainToEntity(movie)
+            localDataSource.setFavoriteMovie(movieEntity, newState)
+        }
     }
 
 
     override fun getOnAirTv(): Flow<Resource<List<TvShow>>> =
-            object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<List<TvShow>> {
-                    return localDataSource.getAllTvShow().map { TvShowDataMapper.mapEntitiesToDomain(it) }
-                }
+        object : NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(
+            appExecutors
+        ) {
+            override fun loadFromDB(): Flow<List<TvShow>> {
+                return localDataSource.getAllTvShow()
+                    .map { TvShowDataMapper.mapEntitiesToDomain(it) }
+            }
 
-                override fun shouldFetch(data: List<TvShow>?): Boolean =
-                        data == null || data.isEmpty()
+            override fun shouldFetch(data: List<TvShow>?): Boolean =
+                data == null || data.isEmpty()
 
-                override suspend fun createCall(): Flow<ApiResponse<List<TvShowResponse>>> =
-                        remoteDataSource.getOnAirTv(1)
+            override suspend fun createCall(): Flow<ApiResponse<List<TvShowResponse>>> =
+                remoteDataSource.getOnAirTv(1)
 
-                override suspend fun saveCallResult(data: List<TvShowResponse>) {
-                    val tvShowList = TvShowDataMapper.mapResponsesToEntities(data)
-                    localDataSource.insertTvShow(tvShowList)
-                }
+            override suspend fun saveCallResult(data: List<TvShowResponse>) {
+                val tvShowList = TvShowDataMapper.mapResponsesToEntities(data)
+                localDataSource.insertTvShow(tvShowList)
+            }
 
-            }.asFlow()
+        }.asFlow()
 
     override fun getDetailTv(id: String): Flow<Resource<TvShow>> =
-            object : NetworkBoundResource<TvShow, TvShowResponse>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<TvShow> {
-                    return localDataSource.getDetailTvShow(id).map { TvShowDataMapper.mapEntityToDomain(it) }
-                }
+        object : NetworkBoundResource<TvShow, TvShowResponse>(
+            appExecutors
+        ) {
+            override fun loadFromDB(): Flow<TvShow> {
+                return localDataSource.getDetailTvShow(id)
+                    .map { TvShowDataMapper.mapEntityToDomain(it) }
+            }
 
-                override fun shouldFetch(data: TvShow?): Boolean =
-                    data?.genres == null || data.genres.isEmpty()
+            override fun shouldFetch(data: TvShow?): Boolean =
+                data?.genres == null || data.genres.isEmpty()
 
-                override suspend fun createCall(): Flow<ApiResponse<TvShowResponse>> =
-                        remoteDataSource.getDetailTv(id)
+            override suspend fun createCall(): Flow<ApiResponse<TvShowResponse>> =
+                remoteDataSource.getDetailTv(id)
 
-                override suspend fun saveCallResult(data: TvShowResponse) {
-                    val tvShow = TvShowDataMapper.mapResponseToEntity(data)
-                    localDataSource.updateDetailTvShoe(tvShow)
-                }
-            }.asFlow()
+            override suspend fun saveCallResult(data: TvShowResponse) {
+                val tvShow = TvShowDataMapper.mapResponseToEntity(data)
+                localDataSource.updateDetailTvShoe(tvShow)
+            }
+        }.asFlow()
 
     override fun getTvReview(id: String): Flow<Resource<List<Review>>> =
-            object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
-                    appExecutors
-            ) {
-                override fun loadFromDB(): Flow<List<Review>> {
-                    return localDataSource.getTvReview(id.toInt()).map { TvShowDataMapper.mapReviewEntitiesToDomain(it) }
-                }
+        object : NetworkBoundResource<List<Review>, List<ReviewResponse>>(
+            appExecutors
+        ) {
+            override fun loadFromDB(): Flow<List<Review>> {
+                return localDataSource.getTvReview(id.toInt())
+                    .map { TvShowDataMapper.mapReviewEntitiesToDomain(it) }
+            }
 
-                override fun shouldFetch(data: List<Review>?): Boolean =
-                        data == null || data.isEmpty()
+            override fun shouldFetch(data: List<Review>?): Boolean =
+                data == null || data.isEmpty()
 
-                override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> =
-                        remoteDataSource.getTvReview(id, 1)
+            override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> =
+                remoteDataSource.getTvReview(id, 1)
 
-                override suspend fun saveCallResult(data: List<ReviewResponse>) {
-                    val reviews = TvShowDataMapper.mapReviewResponsesToEntities(data, id.toInt())
-                    localDataSource.insertTvReview(reviews)
-                }
+            override suspend fun saveCallResult(data: List<ReviewResponse>) {
+                val reviews = TvShowDataMapper.mapReviewResponsesToEntities(data, id.toInt())
+                localDataSource.insertTvReview(reviews)
+            }
 
-            }.asFlow()
+        }.asFlow()
 
     override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> {
         TODO("Not yet implemented")
     }
 
+    override fun getFavoriteTvShow(): Flow<List<TvShow>> =
+        localDataSource.getFavoriteTvShow().map { TvShowDataMapper.mapEntitiesToDomain(it) }
+
     override fun setFavoriteTvShow(tvShow: TvShow, newState: Boolean) {
-        GlobalScope.launch {
+        appExecutors.diskIO().execute {
             val tvShowEntity = TvShowDataMapper.mapDomainToEntity(tvShow)
             localDataSource.setFavoriteTvShow(tvShowEntity, newState)
         }

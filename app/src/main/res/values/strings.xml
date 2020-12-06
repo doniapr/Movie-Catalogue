@@ -18,4 +18,5 @@
     <string name="content">Content</string>
     <string name="review">Review</string>
     <string name="no_review">No Review Found</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

@@ -23,8 +23,6 @@ class DetailMovieViewModel(private val movieUseCase: MovieUseCase): ViewModel() 
     }
 
     fun changeFavoriteState(movie: Movie, state: Boolean){
-        GlobalScope.launch {
-            movieUseCase.setFavoriteMovie(movie, state)
-        }
+        movieUseCase.setFavoriteMovie(movie, state)
     }
 }

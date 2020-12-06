@@ -14,6 +14,9 @@ class TvShowInteractor(private val catalogueRepository: ICatalogueRepository): T
     override fun getTvShowReview(id: String): Flow<Resource<List<Review>>> = catalogueRepository.getTvReview(id)
 
     override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> = catalogueRepository.searchTvShow(query)
+
+    override fun getFavoriteTvShow(): Flow<List<TvShow>> = catalogueRepository.getFavoriteTvShow()
+
     override fun setFavoriteTvShow(tvShow: TvShow, newState: Boolean) {
         catalogueRepository.setFavoriteTvShow(tvShow, newState)
     }
