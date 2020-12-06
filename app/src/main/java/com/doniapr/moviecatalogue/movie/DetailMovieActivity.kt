@@ -7,14 +7,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.Movie
-import com.doniapr.core.utils.MovieDataMapper
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -30,6 +28,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private var isFavorite = false
     private var menu: Menu? = null
     private var contentMovie: Movie? = null
+    private val reviewAdapter = ReviewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,7 @@ class DetailMovieActivity : AppCompatActivity() {
         }
 
         val id = intent.getStringExtra(EXTRA_MOVIE_ID)
-        val reviewAdapter = ReviewAdapter()
+
         if (id != null) {
             detailMovieViewModel.setMovie(id)
         }
@@ -62,29 +61,9 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         })
 
-        detailMovieViewModel.reviews.observe(this, { reviews ->
-            if (reviews != null) {
-                when (reviews) {
-                    is Resource.Success -> {
-                        progress_bar_review_movie.visibility = View.GONE
+        setReview()
 
-                        if (reviews.data != null && reviews.data!!.isNotEmpty()){
-                            txt_no_review_found.visibility = View.GONE
-                            reviewAdapter.setData(reviews.data)
-                        } else {
-                            txt_no_review_found.visibility = View.VISIBLE
-                        }
-                    }
-                    is Resource.Loading -> progress_bar_review_movie.visibility = View.VISIBLE
-                    is Resource.Error -> {
-                        progress_bar_review_movie.visibility = View.GONE
-                        txt_no_review_found.visibility = View.VISIBLE
-                    }
-                }
-            }
-        })
-
-        with(rv_review_movie){
+        with(rv_review_movie) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = reviewAdapter
@@ -99,7 +78,7 @@ class DetailMovieActivity : AppCompatActivity() {
             val runtime = "${it.runtime} menit"
 
             val genres = ArrayList<String>()
-            for(genre in it.genres!!){
+            for (genre in it.genres!!) {
                 genres.add(genre.name)
             }
             txt_genre_detail.text = genres.joinToString()
@@ -117,8 +96,30 @@ class DetailMovieActivity : AppCompatActivity() {
             .placeholder(R.drawable.poster_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(img_banner_movie)
+    }
 
+    private fun setReview(){
+        detailMovieViewModel.reviews.observe(this, { reviews ->
+            if (reviews != null) {
+                when (reviews) {
+                    is Resource.Success -> {
+                        progress_bar_review_movie.visibility = View.GONE
 
+                        if (reviews.data != null && reviews.data!!.isNotEmpty()) {
+                            txt_no_review_found.visibility = View.GONE
+                            reviewAdapter.setData(reviews.data)
+                        } else {
+                            txt_no_review_found.visibility = View.VISIBLE
+                        }
+                    }
+                    is Resource.Loading -> progress_bar_review_movie.visibility = View.VISIBLE
+                    is Resource.Error -> {
+                        progress_bar_review_movie.visibility = View.GONE
+                        txt_no_review_found.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
     }
 
     private fun setActionbarTitle(title: String) {

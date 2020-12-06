@@ -78,12 +78,12 @@ class RemoteDataSource(private val apiService: ApiService) {
             try {
                 val response = apiService.getOnTheAirTv(page)
                 val dataArray = response.results
-                if (dataArray.isNotEmpty()){
+                if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))
                 } else {
                     emit(ApiResponse.Empty)
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
@@ -94,7 +94,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             try {
                 val response = apiService.getDetailTv(id)
                 emit(ApiResponse.Success(response))
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)

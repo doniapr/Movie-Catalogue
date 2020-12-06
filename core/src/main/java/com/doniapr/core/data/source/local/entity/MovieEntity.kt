@@ -5,12 +5,11 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.doniapr.core.domain.model.Genre
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "movie")
-data class MovieEntity (
+data class MovieEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")

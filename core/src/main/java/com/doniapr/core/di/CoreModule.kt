@@ -2,7 +2,7 @@ package com.doniapr.core.di
 
 import androidx.room.Room
 import com.doniapr.core.BuildConfig
-import com.doniapr.core.data.source.CatalogueRepository
+import com.doniapr.core.data.CatalogueRepository
 import com.doniapr.core.data.source.local.LocalDataSource
 import com.doniapr.core.data.source.local.room.CatalogueDatabase
 import com.doniapr.core.data.source.remote.RemoteDataSource

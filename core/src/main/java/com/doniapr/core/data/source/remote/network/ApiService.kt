@@ -14,10 +14,16 @@ interface ApiService {
     suspend fun getDetailMovie(@Path("movieId") id: String): MovieResponse
 
     @GET("movie/{movieId}/reviews?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
-    suspend fun getMovieReview(@Path("movieId") id: String, @Query("page") page: Int): ListReviewResponse
+    suspend fun getMovieReview(
+        @Path("movieId") id: String,
+        @Query("page") page: Int
+    ): ListReviewResponse
 
     @GET("search/movie?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US&include_adult=false")
-    suspend fun searchMovie(@Query("query") query: String, @Query("page") page: Int): ListMovieResponse
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): ListMovieResponse
 
     @GET("tv/on_the_air?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US")
     suspend fun getOnTheAirTv(@Query("page") page: Int): ListTvShowResponse
@@ -29,5 +35,8 @@ interface ApiService {
     suspend fun getTvReview(@Path("tvId") id: String, @Query("page") page: Int): ListReviewResponse
 
     @GET("search/tv?api_key=${BuildConfig.TMDB_API_KEY}&language=en-US&include_adult=false")
-    suspend fun searchTv(@Query("query") query: String, @Query("page") page: Int): ListTvShowResponse
+    suspend fun searchTv(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): ListTvShowResponse
 }

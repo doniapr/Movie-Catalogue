@@ -10,7 +10,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.domain.model.TvShow
 import com.doniapr.moviecatalogue.R
-import com.doniapr.moviecatalogue.movie.DetailMovieActivity
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {

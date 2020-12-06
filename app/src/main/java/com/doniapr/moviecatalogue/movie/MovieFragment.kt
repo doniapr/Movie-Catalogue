@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.doniapr.core.data.Resource
 import com.doniapr.moviecatalogue.R
@@ -29,7 +28,7 @@ class MovieFragment : Fragment() {
 
         val movieAdapter = MovieAdapter()
 
-        movieViewModel.movies.observe(this, Observer { movie ->
+        movieViewModel.movies.observe(this, { movie ->
             if (movie != null) {
                 when (movie) {
                     is Resource.Loading -> progress_bar_movie.visibility = View.VISIBLE

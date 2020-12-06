@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 else -> throw Throwable("Unknown item Id")
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

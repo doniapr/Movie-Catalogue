@@ -1,16 +1,13 @@
 package com.doniapr.moviecatalogue.tvshow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.doniapr.core.data.Resource
 import com.doniapr.moviecatalogue.R
-import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -31,7 +28,7 @@ class TvShowFragment : Fragment() {
 
         val tvShowAdapter = TvShowAdapter()
 
-        tvShowViewModel.tvShows.observe(this, Observer { tvShow ->
+        tvShowViewModel.tvShows.observe(this, { tvShow ->
             if (tvShow != null) {
                 when (tvShow) {
                     is Resource.Loading -> progress_bar_tv_show.visibility = View.VISIBLE

@@ -16,7 +16,6 @@ import com.doniapr.core.domain.model.TvShow
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
-import kotlinx.android.synthetic.main.activity_detail_tv_show.txt_no_review_found
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailTvShowActivity : AppCompatActivity() {
@@ -29,6 +28,7 @@ class DetailTvShowActivity : AppCompatActivity() {
     private var isFavorite = false
     private var menu: Menu? = null
     private var contentTvShow: TvShow? = null
+    private val reviewAdapter = ReviewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         }
 
         val id = intent.getStringExtra(EXTRA_TV_SHOW_ID)
-        val reviewAdapter = ReviewAdapter()
+
         if (id != null) {
             detailTvShowViewModel.setTvShow(id)
         }
@@ -55,16 +55,54 @@ class DetailTvShowActivity : AppCompatActivity() {
                     is Resource.Error -> {
                         progress_bar_detail_tv_show.visibility = View.GONE
                         Toast.makeText(
-                                this@DetailTvShowActivity,
-                                tvShow.message,
-                                Toast.LENGTH_SHORT
+                            this@DetailTvShowActivity,
+                            tvShow.message,
+                            Toast.LENGTH_SHORT
                         )
-                                .show()
+                            .show()
                     }
                 }
             }
         })
 
+        setReview()
+
+        with(rv_review_tv_show) {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = reviewAdapter
+        }
+    }
+
+    private fun setContent() {
+        progress_bar_detail_tv_show.visibility = View.GONE
+        contentTvShow?.let {
+            setActionbarTitle(it.name)
+            val detailTitle = "${it.name} (${it.firstAirDate.slice(0..3)})"
+            val runtime = "${it.episodeRunTime} menit"
+
+            val genres = ArrayList<String>()
+            for (genre in it.genres!!) {
+                genres.add(genre.name)
+            }
+            txt_genre_detail_tv_show.text = genres.joinToString()
+            txt_content_overview_tv_show.text = it.overview
+            txt_content_release_date_tv_show.text = it.firstAirDate
+            txt_content_runtime_tv_show.text = runtime
+            title_detail_tv_show.text = detailTitle
+        }
+
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.posterPath)
+            .placeholder(R.drawable.poster_placeholder)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(img_poster_detail_tv_show)
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.backdropPath)
+            .placeholder(R.drawable.poster_placeholder)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(img_banner_tv_show)
+    }
+
+    private fun setReview() {
         detailTvShowViewModel.reviews.observe(this, { reviews ->
             if (reviews != null) {
                 when (reviews) {
@@ -86,42 +124,6 @@ class DetailTvShowActivity : AppCompatActivity() {
                 }
             }
         })
-
-        with(rv_review_tv_show) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = reviewAdapter
-        }
-    }
-
-    private fun setContent() {
-        progress_bar_detail_tv_show.visibility = View.GONE
-        contentTvShow?.let {
-            setActionbarTitle(it.name)
-            val detailTitle = "${it.name} (${it.firstAirDate.slice(0..3)})"
-            val runtime = "${it.episodeRunTime} menit"
-
-            val genres = ArrayList<String>()
-            for(genre in it.genres!!){
-                genres.add(genre.name)
-            }
-            txt_genre_detail_tv_show.text = genres.joinToString()
-            txt_content_overview_tv_show.text = it.overview
-            txt_content_release_date_tv_show.text = it.firstAirDate
-            txt_content_runtime_tv_show.text = runtime
-            title_detail_tv_show.text = detailTitle
-        }
-
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.posterPath)
-                .placeholder(R.drawable.poster_placeholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(img_poster_detail_tv_show)
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.backdropPath)
-                .placeholder(R.drawable.poster_placeholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(img_banner_tv_show)
-
-
     }
 
     private fun setActionbarTitle(title: String) {

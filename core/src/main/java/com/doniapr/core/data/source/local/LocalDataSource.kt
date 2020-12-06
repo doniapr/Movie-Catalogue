@@ -18,12 +18,13 @@ class LocalDataSource(private val movieDao: MovieDao, private val tvShowDao: TvS
 
     suspend fun updateDetailMovie(movie: MovieEntity) = movieDao.updateDetailMovie(movie)
 
-    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean){
+    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
         movie.isFavorite = newState
         movieDao.updateFavoriteMovie(movie)
     }
 
-    suspend fun insertMovieReview(listReview: List<ReviewEntity>) = movieDao.insertReview(listReview)
+    suspend fun insertMovieReview(listReview: List<ReviewEntity>) =
+        movieDao.insertReview(listReview)
 
     fun getMovieReview(id: Int): Flow<List<ReviewEntity>> = movieDao.getMovieReview(id)
 

@@ -6,14 +6,18 @@ import com.doniapr.core.domain.model.Review
 import com.doniapr.core.domain.repository.ICatalogueRepository
 import kotlinx.coroutines.flow.Flow
 
-class MovieInteractor(private val catalogueRepository: ICatalogueRepository): MovieUseCase {
-    override fun getNowPlayingMovie(): Flow<Resource<List<Movie>>> = catalogueRepository.getNowPlayingMovie()
+class MovieInteractor(private val catalogueRepository: ICatalogueRepository) : MovieUseCase {
+    override fun getNowPlayingMovie(): Flow<Resource<List<Movie>>> =
+        catalogueRepository.getNowPlayingMovie()
 
-    override fun getDetailMovie(id: String): Flow<Resource<Movie>> = catalogueRepository.getDetailMovie(id)
+    override fun getDetailMovie(id: String): Flow<Resource<Movie>> =
+        catalogueRepository.getDetailMovie(id)
 
-    override fun getMovieReview(id: String): Flow<Resource<List<Review>>> = catalogueRepository.getMovieReview(id)
+    override fun getMovieReview(id: String): Flow<Resource<List<Review>>> =
+        catalogueRepository.getMovieReview(id)
 
-    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> = catalogueRepository.searchMovie(query)
+    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> =
+        catalogueRepository.searchMovie(query)
 
     override fun setFavoriteMovie(movie: Movie, newState: Boolean) {
         catalogueRepository.setFavoriteMovie(movie, newState)

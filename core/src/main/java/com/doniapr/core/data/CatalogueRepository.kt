@@ -1,7 +1,5 @@
-package com.doniapr.core.data.source
+package com.doniapr.core.data
 
-import com.doniapr.core.data.NetworkBoundResource
-import com.doniapr.core.data.Resource
 import com.doniapr.core.data.source.local.LocalDataSource
 import com.doniapr.core.data.source.remote.RemoteDataSource
 import com.doniapr.core.data.source.remote.network.ApiResponse

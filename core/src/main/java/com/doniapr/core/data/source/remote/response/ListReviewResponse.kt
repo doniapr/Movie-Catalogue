@@ -2,7 +2,7 @@ package com.doniapr.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ListReviewResponse (
+data class ListReviewResponse(
         @field:SerializedName("results")
         val results: List<ReviewResponse>,
 

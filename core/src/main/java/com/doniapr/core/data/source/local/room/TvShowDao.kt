@@ -1,7 +1,6 @@
 package com.doniapr.core.data.source.local.room
 
 import androidx.room.*
-import com.doniapr.core.data.source.local.entity.MovieEntity
 import com.doniapr.core.data.source.local.entity.ReviewEntity
 import com.doniapr.core.data.source.local.entity.TvShowEntity
 import kotlinx.coroutines.flow.Flow

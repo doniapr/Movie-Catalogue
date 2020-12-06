@@ -23,28 +23,28 @@ object TvShowDataMapper {
                 episodeRunTime = it.episodeRunTime.joinToString()
             }
             val tvShow = TvShowEntity(
-                    id = it.id,
-                    backdropPath = it.backdropPath,
-                    episodeRunTime = episodeRunTime,
-                    genres = genre,
-                    firstAirDate = it.firstAirDate,
-                    homepage = it.homepage ?: "",
-                    inProduction = it.inProduction,
-                    lastAirDate = it.lastAirDate ?: "",
-                    name = it.name,
-                    numberOfEpisodes = it.numberOfEpisodes,
-                    numberOfSeasons = it.numberOfSeasons,
-                    originalLanguage = it.originalLanguage,
-                    originalName = it.originalName,
-                    overview = it.overview,
-                    popularity = it.popularity,
-                    posterPath = it.posterPath,
-                    status = it.status ?: "",
-                    tagLine = it.tagLine ?: "",
-                    type = it.type,
-                    voteAverage = it.voteAverage,
-                    voteCount = it.voteCount,
-                    isFavorite = false
+                id = it.id,
+                backdropPath = it.backdropPath,
+                episodeRunTime = episodeRunTime,
+                genres = genre,
+                firstAirDate = it.firstAirDate,
+                homepage = it.homepage ?: "",
+                inProduction = it.inProduction,
+                lastAirDate = it.lastAirDate ?: "",
+                name = it.name,
+                numberOfEpisodes = it.numberOfEpisodes,
+                numberOfSeasons = it.numberOfSeasons,
+                originalLanguage = it.originalLanguage,
+                originalName = it.originalName,
+                overview = it.overview,
+                popularity = it.popularity,
+                posterPath = it.posterPath,
+                status = it.status ?: "",
+                tagLine = it.tagLine ?: "",
+                type = it.type,
+                voteAverage = it.voteAverage,
+                voteCount = it.voteCount,
+                isFavorite = false
             )
             tvShowList.add(tvShow)
         }
@@ -61,62 +61,62 @@ object TvShowDataMapper {
             episodeRunTime = input.episodeRunTime.joinToString()
         }
         return TvShowEntity(
-                id = input.id,
-                backdropPath = input.backdropPath,
-                episodeRunTime = episodeRunTime,
-                genres = genre,
-                firstAirDate = input.firstAirDate,
-                homepage = input.homepage ?: "",
-                inProduction = input.inProduction,
-                lastAirDate = input.lastAirDate ?: "",
-                name = input.name,
-                numberOfEpisodes = input.numberOfEpisodes,
-                numberOfSeasons = input.numberOfSeasons,
-                originalLanguage = input.originalLanguage,
-                originalName = input.originalName,
-                overview = input.overview,
-                popularity = input.popularity,
-                posterPath = input.posterPath,
-                status = input.status ?: "",
-                tagLine = input.tagLine ?: "",
-                type = input.type,
-                voteAverage = input.voteAverage,
-                voteCount = input.voteCount,
-                isFavorite = false
+            id = input.id,
+            backdropPath = input.backdropPath,
+            episodeRunTime = episodeRunTime,
+            genres = genre,
+            firstAirDate = input.firstAirDate,
+            homepage = input.homepage ?: "",
+            inProduction = input.inProduction,
+            lastAirDate = input.lastAirDate ?: "",
+            name = input.name,
+            numberOfEpisodes = input.numberOfEpisodes,
+            numberOfSeasons = input.numberOfSeasons,
+            originalLanguage = input.originalLanguage,
+            originalName = input.originalName,
+            overview = input.overview,
+            popularity = input.popularity,
+            posterPath = input.posterPath,
+            status = input.status ?: "",
+            tagLine = input.tagLine ?: "",
+            type = input.type,
+            voteAverage = input.voteAverage,
+            voteCount = input.voteCount,
+            isFavorite = false
         )
     }
 
     fun mapEntitiesToDomain(input: List<TvShowEntity>): List<TvShow> =
-            input.map {
-                val listGenre = ArrayList<Genre>()
-                if (it.genres != null && it.genres?.isNotEmpty()!!) {
-                    listGenre.addAll(setUpGenre(it.genres!!))
-                }
-                TvShow(
-                        id = it.id,
-                        backdropPath = it.backdropPath,
-                        episodeRunTime = it.episodeRunTime ?: "",
-                        genres = listGenre,
-                        firstAirDate = it.firstAirDate,
-                        homepage = it.homepage ?: "",
-                        inProduction = it.inProduction ?: false,
-                        lastAirDate = it.lastAirDate ?: "",
-                        name = it.name,
-                        numberOfEpisodes = it.numberOfEpisodes ?: 0,
-                        numberOfSeasons = it.numberOfSeasons ?: 0,
-                        originalLanguage = it.originalLanguage,
-                        originalName = it.originalName,
-                        overview = it.overview,
-                        popularity = it.popularity,
-                        posterPath = it.posterPath,
-                        status = it.status ?: "",
-                        tagLine = it.tagLine ?: "",
-                        type = it.type ?: "",
-                        voteAverage = it.voteAverage,
-                        voteCount = it.voteCount,
-                        isFavorite = it.isFavorite
-                )
+        input.map {
+            val listGenre = ArrayList<Genre>()
+            if (it.genres != null && it.genres?.isNotEmpty()!!) {
+                listGenre.addAll(setUpGenre(it.genres!!))
             }
+            TvShow(
+                id = it.id,
+                backdropPath = it.backdropPath,
+                episodeRunTime = it.episodeRunTime ?: "",
+                genres = listGenre,
+                firstAirDate = it.firstAirDate,
+                homepage = it.homepage ?: "",
+                inProduction = it.inProduction ?: false,
+                lastAirDate = it.lastAirDate ?: "",
+                name = it.name,
+                numberOfEpisodes = it.numberOfEpisodes ?: 0,
+                numberOfSeasons = it.numberOfSeasons ?: 0,
+                originalLanguage = it.originalLanguage,
+                originalName = it.originalName,
+                overview = it.overview,
+                popularity = it.popularity,
+                posterPath = it.posterPath,
+                status = it.status ?: "",
+                tagLine = it.tagLine ?: "",
+                type = it.type ?: "",
+                voteAverage = it.voteAverage,
+                voteCount = it.voteCount,
+                isFavorite = it.isFavorite
+            )
+        }
 
     fun mapEntityToDomain(input: TvShowEntity): TvShow {
         val listGenre = ArrayList<Genre>()
@@ -124,28 +124,28 @@ object TvShowDataMapper {
             listGenre.addAll(setUpGenre(input.genres!!))
         }
         return TvShow(
-                id = input.id,
-                backdropPath = input.backdropPath,
-                episodeRunTime = input.episodeRunTime ?: "",
-                genres = listGenre,
-                firstAirDate = input.firstAirDate,
-                homepage = input.homepage ?: "",
-                inProduction = input.inProduction ?: false,
-                lastAirDate = input.lastAirDate ?: "",
-                name = input.name,
-                numberOfEpisodes = input.numberOfEpisodes ?: 0,
-                numberOfSeasons = input.numberOfSeasons ?: 0,
-                originalLanguage = input.originalLanguage,
-                originalName = input.originalName,
-                overview = input.overview,
-                popularity = input.popularity,
-                posterPath = input.posterPath,
-                status = input.status ?: "",
-                tagLine = input.tagLine ?: "",
-                type = input.type ?: "",
-                voteAverage = input.voteAverage,
-                voteCount = input.voteCount,
-                isFavorite = input.isFavorite
+            id = input.id,
+            backdropPath = input.backdropPath,
+            episodeRunTime = input.episodeRunTime ?: "",
+            genres = listGenre,
+            firstAirDate = input.firstAirDate,
+            homepage = input.homepage ?: "",
+            inProduction = input.inProduction ?: false,
+            lastAirDate = input.lastAirDate ?: "",
+            name = input.name,
+            numberOfEpisodes = input.numberOfEpisodes ?: 0,
+            numberOfSeasons = input.numberOfSeasons ?: 0,
+            originalLanguage = input.originalLanguage,
+            originalName = input.originalName,
+            overview = input.overview,
+            popularity = input.popularity,
+            posterPath = input.posterPath,
+            status = input.status ?: "",
+            tagLine = input.tagLine ?: "",
+            type = input.type ?: "",
+            voteAverage = input.voteAverage,
+            voteCount = input.voteCount,
+            isFavorite = input.isFavorite
         )
     }
 
@@ -161,43 +161,46 @@ object TvShowDataMapper {
         }
 
         return TvShowEntity(
-                id = input.id,
-                backdropPath = input.backdropPath,
-                episodeRunTime = episodeRunTime,
-                genres = genre,
-                firstAirDate = input.firstAirDate,
-                homepage = input.homepage ?: "",
-                inProduction = input.inProduction,
-                lastAirDate = input.lastAirDate ?: "",
-                name = input.name,
-                numberOfEpisodes = input.numberOfEpisodes,
-                numberOfSeasons = input.numberOfSeasons,
-                originalLanguage = input.originalLanguage,
-                originalName = input.originalName,
-                overview = input.overview,
-                popularity = input.popularity,
-                posterPath = input.posterPath,
-                status = input.status ?: "",
-                tagLine = input.tagLine ?: "",
-                type = input.type,
-                voteAverage = input.voteAverage,
-                voteCount = input.voteCount,
-                isFavorite = input.isFavorite
+            id = input.id,
+            backdropPath = input.backdropPath,
+            episodeRunTime = episodeRunTime,
+            genres = genre,
+            firstAirDate = input.firstAirDate,
+            homepage = input.homepage ?: "",
+            inProduction = input.inProduction,
+            lastAirDate = input.lastAirDate ?: "",
+            name = input.name,
+            numberOfEpisodes = input.numberOfEpisodes,
+            numberOfSeasons = input.numberOfSeasons,
+            originalLanguage = input.originalLanguage,
+            originalName = input.originalName,
+            overview = input.overview,
+            popularity = input.popularity,
+            posterPath = input.posterPath,
+            status = input.status ?: "",
+            tagLine = input.tagLine ?: "",
+            type = input.type,
+            voteAverage = input.voteAverage,
+            voteCount = input.voteCount,
+            isFavorite = input.isFavorite
         )
     }
 
-    fun mapReviewResponsesToEntities(input: List<ReviewResponse>, catalogueId: Int): List<ReviewEntity> {
+    fun mapReviewResponsesToEntities(
+        input: List<ReviewResponse>,
+        catalogueId: Int
+    ): List<ReviewEntity> {
         val reviewList = ArrayList<ReviewEntity>()
         input.map {
             val review = ReviewEntity(
-                    id = it.id,
-                    catalogueId = catalogueId,
-                    isMovie = false,
-                    author = it.author,
-                    content = it.content,
-                    url = it.url,
-                    createdAt = it.createdAt,
-                    updatedAt = it.updatedAt
+                id = it.id,
+                catalogueId = catalogueId,
+                isMovie = false,
+                author = it.author,
+                content = it.content,
+                url = it.url,
+                createdAt = it.createdAt,
+                updatedAt = it.updatedAt
             )
             reviewList.add(review)
         }
@@ -205,16 +208,16 @@ object TvShowDataMapper {
     }
 
     fun mapReviewEntitiesToDomain(input: List<ReviewEntity>): List<Review> =
-            input.map {
-                Review(
-                        id = it.id,
-                        author = it.author,
-                        content = it.content,
-                        url = it.url,
-                        createdAt = it.createdAt,
-                        updatedAt = it.updatedAt
-                )
-            }
+        input.map {
+            Review(
+                id = it.id,
+                author = it.author,
+                content = it.content,
+                url = it.url,
+                createdAt = it.createdAt,
+                updatedAt = it.updatedAt
+            )
+        }
 
 
     private fun setUpGenre(genreStr: String): List<Genre> {

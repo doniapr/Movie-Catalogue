@@ -1,6 +1,6 @@
 package com.doniapr.core.domain.model
 
-data class Movie (
+data class Movie(
     val adult: Boolean,
     val backdropPath: String,
     val genres: List<Genre>?,
