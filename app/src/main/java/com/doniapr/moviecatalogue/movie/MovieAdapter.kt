@@ -39,7 +39,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             with(itemView) {
                 setOnClickListener {
                     val intent = Intent(context, DetailMovieActivity::class.java)
-                    intent.putExtra(EXTRA_MOVIE_ID, movie.id.toString())
+                    intent.putExtra(EXTRA_MOVIE_ID, movie)
                     context.startActivity(intent)
                 }
                 val textTitle = "${movie.title} (${movie.releaseDate.slice(0..3)})"

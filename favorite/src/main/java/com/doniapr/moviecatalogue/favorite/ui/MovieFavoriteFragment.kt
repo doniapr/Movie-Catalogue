@@ -31,6 +31,9 @@ class MovieFavoriteFragment : Fragment() {
         movieFavoriteViewModel.movies.observe(this, {
             if (it != null && it.isNotEmpty()) {
                 movieAdapter.setData(it)
+                txt_error_movie_favorite.visibility = View.GONE
+            } else {
+                txt_error_movie_favorite.visibility = View.VISIBLE
             }
         })
 

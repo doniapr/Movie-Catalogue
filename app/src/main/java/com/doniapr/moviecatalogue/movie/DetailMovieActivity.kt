@@ -16,6 +16,8 @@ import com.doniapr.core.domain.model.Movie
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detail.txt_no_review_found
+import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieActivity : AppCompatActivity() {
@@ -39,11 +41,18 @@ class DetailMovieActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        val id = intent.getStringExtra(EXTRA_MOVIE_ID)
+        val movieExtra = intent.getParcelableExtra<Movie>(EXTRA_MOVIE_ID)
 
-        if (id != null) {
-            detailMovieViewModel.setMovie(id)
+        if (movieExtra != null) {
+            detailMovieViewModel.setMovie(movieExtra.id.toString())
+
+            setActionbarTitle(movieExtra.title)
+            val detailTitle = "${movieExtra.title} (${movieExtra.releaseDate.slice(0..3)})"
+            title_detail_movie.text = detailTitle
+
+            setImage(movieExtra.posterPath, movieExtra.backdropPath)
         }
+
         detailMovieViewModel.movie.observe(this, { movie ->
             if (movie != null) {
                 when (movie) {
@@ -86,19 +95,23 @@ class DetailMovieActivity : AppCompatActivity() {
             txt_content_release_date.text = it.releaseDate
             txt_content_runtime.text = runtime
             title_detail_movie.text = detailTitle
-        }
 
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentMovie?.posterPath)
+            setImage(it.posterPath, it.backdropPath)
+        }
+    }
+
+    private fun setImage(poster: String, backdrop: String) {
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + poster)
             .placeholder(R.drawable.poster_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(img_poster_detail)
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentMovie?.backdropPath)
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + backdrop)
             .placeholder(R.drawable.poster_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(img_banner_movie)
     }
 
-    private fun setReview(){
+    private fun setReview() {
         detailMovieViewModel.reviews.observe(this, { reviews ->
             if (reviews != null) {
                 when (reviews) {

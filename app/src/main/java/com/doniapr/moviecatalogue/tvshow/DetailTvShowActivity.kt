@@ -39,11 +39,17 @@ class DetailTvShowActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        val id = intent.getStringExtra(EXTRA_TV_SHOW_ID)
+        val tvShowExtra = intent.getParcelableExtra<TvShow>(EXTRA_TV_SHOW_ID)
 
-        if (id != null) {
-            detailTvShowViewModel.setTvShow(id)
+        if (tvShowExtra != null) {
+            detailTvShowViewModel.setTvShow(tvShowExtra.id.toString())
+            setActionbarTitle(tvShowExtra.name)
+            val detailTitle = "${tvShowExtra.name} (${tvShowExtra.firstAirDate.slice(0..3)})"
+            title_detail_tv_show.text = detailTitle
+
+            setImage(tvShowExtra.posterPath, tvShowExtra.backdropPath)
         }
+
         detailTvShowViewModel.tvShow.observe(this, { tvShow ->
             if (tvShow != null) {
                 when (tvShow) {
@@ -90,13 +96,17 @@ class DetailTvShowActivity : AppCompatActivity() {
             txt_content_release_date_tv_show.text = it.firstAirDate
             txt_content_runtime_tv_show.text = runtime
             title_detail_tv_show.text = detailTitle
-        }
 
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.posterPath)
+            setImage(it.posterPath, it.backdropPath)
+        }
+    }
+
+    private fun setImage(poster: String, backdrop: String) {
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + poster)
             .placeholder(R.drawable.poster_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(img_poster_detail_tv_show)
-        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + contentTvShow?.backdropPath)
+        Glide.with(this).load(BuildConfig.BASE_URL_IMAGE + backdrop)
             .placeholder(R.drawable.poster_placeholder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(img_banner_tv_show)

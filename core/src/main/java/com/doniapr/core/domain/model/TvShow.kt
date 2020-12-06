@@ -1,5 +1,9 @@
 package com.doniapr.core.domain.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class TvShow(
         val backdropPath: String,
         val episodeRunTime: String,
@@ -23,4 +27,4 @@ data class TvShow(
         val voteAverage: Double,
         val voteCount: Int,
         val isFavorite: Boolean
-)
+) : Parcelable

@@ -1,5 +1,9 @@
 package com.doniapr.core.domain.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Movie(
     val adult: Boolean,
     val backdropPath: String,
@@ -22,4 +26,4 @@ data class Movie(
     val voteAverage: Double,
     val voteCount: Int,
     val isFavorite: Boolean
-)
+) : Parcelable
