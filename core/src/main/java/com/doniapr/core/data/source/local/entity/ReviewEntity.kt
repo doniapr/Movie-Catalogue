@@ -1,13 +1,10 @@
 package com.doniapr.core.data.source.local.entity
 
-import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 @Entity(tableName = "review")
 data class ReviewEntity(
         @PrimaryKey
@@ -36,4 +33,4 @@ data class ReviewEntity(
         @ColumnInfo(name = "updated_at")
         val updatedAt: String
 
-) : Parcelable
+)

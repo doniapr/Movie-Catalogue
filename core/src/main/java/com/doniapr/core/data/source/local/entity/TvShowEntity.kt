@@ -1,13 +1,10 @@
 package com.doniapr.core.data.source.local.entity
 
-import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 @Entity(tableName = "tvshow")
 data class TvShowEntity(
         @PrimaryKey
@@ -77,4 +74,4 @@ data class TvShowEntity(
 
         @ColumnInfo(name = "isFavorite")
         var isFavorite: Boolean = false
-) : Parcelable
+)

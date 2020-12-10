@@ -28,7 +28,7 @@ class TvShowFavoriteFragment : Fragment() {
 
         val tvShowAdapter = TvShowAdapter()
 
-        tvShowFavoriteViewModel.tvShows.observe(this, {
+        tvShowFavoriteViewModel.tvShows.observe(viewLifecycleOwner, {
             if (it != null && it.isNotEmpty()) {
                 tvShowAdapter.setData(it)
                 txt_error_tv_show_favorite.visibility = View.GONE

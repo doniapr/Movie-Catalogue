@@ -28,7 +28,7 @@ class MovieFavoriteFragment : Fragment() {
 
         val movieAdapter = MovieAdapter()
 
-        movieFavoriteViewModel.movies.observe(this, {
+        movieFavoriteViewModel.movies.observe(viewLifecycleOwner, {
             if (it != null && it.isNotEmpty()) {
                 movieAdapter.setData(it)
                 txt_error_movie_favorite.visibility = View.GONE
