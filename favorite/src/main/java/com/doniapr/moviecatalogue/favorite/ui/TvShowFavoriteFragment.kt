@@ -32,8 +32,10 @@ class TvShowFavoriteFragment : Fragment() {
             if (it != null && it.isNotEmpty()) {
                 tvShowAdapter.setData(it)
                 txt_error_tv_show_favorite.visibility = View.GONE
+                rv_tv_show_favorite.visibility = View.VISIBLE
             } else {
                 txt_error_tv_show_favorite.visibility = View.VISIBLE
+                rv_tv_show_favorite.visibility = View.GONE
             }
         })
 

@@ -87,10 +87,6 @@ class CatalogueRepository(
 
         }.asFlow()
 
-    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> {
-        TODO("Not yet implemented")
-    }
-
     override fun getFavoriteMovie(): Flow<List<Movie>> =
         localDataSource.getFavoriteMovie().map { MovieDataMapper.mapEntitiesToDomain(it) }
 
@@ -166,10 +162,6 @@ class CatalogueRepository(
             }
 
         }.asFlow()
-
-    override fun searchTvShow(query: String): Flow<Resource<List<TvShow>>> {
-        TODO("Not yet implemented")
-    }
 
     override fun getFavoriteTvShow(): Flow<List<TvShow>> =
         localDataSource.getFavoriteTvShow().map { TvShowDataMapper.mapEntitiesToDomain(it) }

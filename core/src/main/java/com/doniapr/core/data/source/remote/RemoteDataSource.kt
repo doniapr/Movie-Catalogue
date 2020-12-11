@@ -57,22 +57,6 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun searchMovie(query: String, page: Int): Flow<ApiResponse<List<MovieResponse>>> {
-        return flow {
-            try {
-                val response = apiService.searchMovie(query, page)
-                val dataArray = response.results
-                if (dataArray.isNotEmpty()) {
-                    emit(ApiResponse.Success(response.results))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
-    }
-
     suspend fun getOnAirTv(page: Int): Flow<ApiResponse<List<TvShowResponse>>> {
         return flow {
             try {
@@ -104,22 +88,6 @@ class RemoteDataSource(private val apiService: ApiService) {
         return flow {
             try {
                 val response = apiService.getTvReview(id, page)
-                val dataArray = response.results
-                if (dataArray.isNotEmpty()) {
-                    emit(ApiResponse.Success(response.results))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun searchTv(query: String, page: Int): Flow<ApiResponse<List<TvShowResponse>>> {
-        return flow {
-            try {
-                val response = apiService.searchTv(query, page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))

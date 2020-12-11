@@ -13,8 +13,6 @@ interface ICatalogueRepository {
 
     fun getMovieReview(id: String): Flow<Resource<List<Review>>>
 
-    fun searchMovie(query: String): Flow<Resource<List<Movie>>>
-
     fun getFavoriteMovie(): Flow<List<Movie>>
 
     fun setFavoriteMovie(movie: Movie, newState: Boolean)
@@ -24,8 +22,6 @@ interface ICatalogueRepository {
     fun getDetailTv(id: String): Flow<Resource<TvShow>>
 
     fun getTvReview(id: String): Flow<Resource<List<Review>>>
-
-    fun searchTvShow(query: String): Flow<Resource<List<TvShow>>>
 
     fun getFavoriteTvShow(): Flow<List<TvShow>>
 

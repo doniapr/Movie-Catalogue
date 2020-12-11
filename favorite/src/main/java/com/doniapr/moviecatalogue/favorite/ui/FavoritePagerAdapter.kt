@@ -24,7 +24,7 @@ class FavoritePagerAdapter(
     override fun getCount(): Int = tabTitles.size
 
     @Nullable
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return tabTitles[position]
     }
 

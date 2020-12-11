@@ -1,14 +1,10 @@
 package com.doniapr.moviecatalogue
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.doniapr.moviecatalogue.movie.MovieFragment
-import com.doniapr.moviecatalogue.tvshow.TvShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -57,10 +53,4 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.frame_container)
     }
 
-    private fun changeFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_container, fragment, fragment.javaClass.simpleName)
-            .commit()
-    }
 }

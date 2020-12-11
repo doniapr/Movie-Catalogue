@@ -16,9 +16,6 @@ class MovieInteractor(private val catalogueRepository: ICatalogueRepository) : M
     override fun getMovieReview(id: String): Flow<Resource<List<Review>>> =
         catalogueRepository.getMovieReview(id)
 
-    override fun searchMovie(query: String): Flow<Resource<List<Movie>>> =
-        catalogueRepository.searchMovie(query)
-
     override fun setFavoriteMovie(movie: Movie, newState: Boolean) {
         catalogueRepository.setFavoriteMovie(movie, newState)
     }

@@ -9,7 +9,6 @@ interface TvShowUseCase {
     fun getOnAirTv(): Flow<Resource<List<TvShow>>>
     fun getDetailTvShow(id: String): Flow<Resource<TvShow>>
     fun getTvShowReview(id: String): Flow<Resource<List<Review>>>
-    fun searchTvShow(query: String): Flow<Resource<List<TvShow>>>
     fun getFavoriteTvShow(): Flow<List<TvShow>>
     fun setFavoriteTvShow(tvShow: TvShow, newState: Boolean)
 

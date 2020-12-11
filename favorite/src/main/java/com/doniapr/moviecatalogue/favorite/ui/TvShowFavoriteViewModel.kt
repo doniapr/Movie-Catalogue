@@ -4,6 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.doniapr.core.domain.usecase.TvShowUseCase
 
-class TvShowFavoriteViewModel(private val tvShowUseCase: TvShowUseCase) : ViewModel() {
+class TvShowFavoriteViewModel(tvShowUseCase: TvShowUseCase) : ViewModel() {
     val tvShows = tvShowUseCase.getFavoriteTvShow().asLiveData()
 }
