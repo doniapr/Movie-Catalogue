@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.domain.model.Movie
 import com.doniapr.moviecatalogue.R
-import com.doniapr.moviecatalogue.movie.DetailMovieActivity.Companion.EXTRA_MOVIE_ID
+import com.doniapr.moviecatalogue.utils.ParamDetail.Companion.EXTRA_MOVIE_ID
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {

@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.doniapr.core.BuildConfig
 import com.doniapr.core.domain.model.TvShow
 import com.doniapr.moviecatalogue.R
+import com.doniapr.moviecatalogue.utils.ParamDetail.Companion.EXTRA_TV_SHOW_ID
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
@@ -39,7 +40,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
             with(itemView) {
                 this.setOnClickListener {
                     val intent = Intent(context, DetailTvShowActivity::class.java).apply {
-                        putExtra(DetailTvShowActivity.EXTRA_TV_SHOW_ID, tvShow)
+                        putExtra(EXTRA_TV_SHOW_ID, tvShow)
                     }
                     context?.startActivity(intent)
                 }

@@ -15,13 +15,11 @@ import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.TvShow
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
+import com.doniapr.moviecatalogue.utils.ParamDetail.Companion.EXTRA_TV_SHOW_ID
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailTvShowActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_TV_SHOW_ID = "tv_show_id"
-    }
 
     private val detailTvShowViewModel: DetailTvShowViewModel by viewModel()
 

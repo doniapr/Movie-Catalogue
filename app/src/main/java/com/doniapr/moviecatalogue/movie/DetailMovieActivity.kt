@@ -15,15 +15,13 @@ import com.doniapr.core.data.Resource
 import com.doniapr.core.domain.model.Movie
 import com.doniapr.moviecatalogue.R
 import com.doniapr.moviecatalogue.ReviewAdapter
+import com.doniapr.moviecatalogue.utils.ParamDetail.Companion.EXTRA_MOVIE_ID
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail.txt_no_review_found
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_MOVIE_ID = "movie_id"
-    }
 
     private val detailMovieViewModel: DetailMovieViewModel by viewModel()
 
