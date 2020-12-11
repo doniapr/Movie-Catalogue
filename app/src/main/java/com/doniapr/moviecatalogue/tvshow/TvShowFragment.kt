@@ -28,7 +28,7 @@ class TvShowFragment : Fragment() {
 
         val tvShowAdapter = TvShowAdapter()
 
-        tvShowViewModel.tvShows.observe(this, { tvShow ->
+        tvShowViewModel.tvShows.observe(viewLifecycleOwner, { tvShow ->
             if (tvShow != null) {
                 when (tvShow) {
                     is Resource.Loading -> progress_bar_tv_show.visibility = View.VISIBLE
