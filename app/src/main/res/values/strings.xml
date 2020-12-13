@@ -20,4 +20,5 @@
     <string name="no_review">No Review Found</string>
     <string name="title_favorite">Favorite</string>
     <string name="no_data_found">Tidak ada data ditemukan</string>
+    <string name="image_description">Item placeholder</string>
 </resources>
