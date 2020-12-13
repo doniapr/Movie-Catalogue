@@ -31,10 +31,10 @@ class TvShowFavoriteFragment : Fragment() {
         tvShowFavoriteViewModel.tvShows.observe(viewLifecycleOwner, {
             if (it != null && it.isNotEmpty()) {
                 tvShowAdapter.setData(it)
-                txt_error_tv_show_favorite.visibility = View.GONE
+                view_empty.visibility = View.GONE
                 rv_tv_show_favorite.visibility = View.VISIBLE
             } else {
-                txt_error_tv_show_favorite.visibility = View.VISIBLE
+                view_empty.visibility = View.VISIBLE
                 rv_tv_show_favorite.visibility = View.GONE
             }
         })
